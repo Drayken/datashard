@@ -118,7 +118,10 @@
     mask-image: url(/hero-accent.webp);
   }
 
-  /* L-shaped corner brackets (HUD / viewfinder frame) */
+  .ui-text {
+    @apply font-ui tracking-widest;
+  }
+
   .corner-border {
     --corner-size: 0.75rem;
     --corner-width: 1px;
