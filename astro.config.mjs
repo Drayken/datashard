@@ -11,7 +11,7 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.local(),
-      name: "Noto Serif Variable",
+      name: "Noto Serif",
       cssVariable: "--font-noto-serif",
       fallbacks: ["serif"],
       options: {
@@ -24,6 +24,28 @@ export default defineConfig({
           },
           {
             src: ["./src/assets/fonts/noto-serif-italic.woff2"],
+            weight: "100 900",
+            style: "italic",
+            display: "swap",
+          },
+        ],
+      },
+    },
+    {
+      provider: fontProviders.local(),
+      name: "Noto Sans",
+      cssVariable: "--font-noto-sans",
+      fallbacks: ["sans-serif"],
+      options: {
+        variants: [
+          {
+            src: ["./src/assets/fonts/noto-sans-normal.woff2"],
+            weight: "100 900",
+            style: "normal",
+            display: "swap",
+          },
+          {
+            src: ["./src/assets/fonts/noto-sans-italic.woff2"],
             weight: "100 900",
             style: "italic",
             display: "swap",

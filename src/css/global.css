@@ -5,7 +5,7 @@
   color-scheme: light dark;
 
   --font-heading: var(--font-noto-serif);
-  --font-body: var(--font-noto-serif);
+  --font-body: var(--font-noto-sans);
   --font-ui: "monospace";
 
   --foreground: light-dark(oklch(0, 0, 0), oklch(1, 0, 0));
