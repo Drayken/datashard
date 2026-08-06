@@ -8,12 +8,14 @@
   --font-body: var(--font-noto-sans);
   --font-ui: var(--font-noto-sans-mono);
 
+  /* Pink = Not set yet */
   --accent: light-dark(oklch(0.66 0.2008 32.29), oklch(0.66 0.2008 32.29));
+  --foreground: light-dark(pink, oklch(0.8131 0.0307 70.65));
+  --background: light-dark(pink, oklch(0.1448 0 0));
+  --muted: light-dark(pink, oklch(0.2593 0 0));
 
-  --foreground: light-dark(oklch(0 0 0), oklch(1 0 0));
-  --background: light-dark(oklch(1 0 0), oklch(0 0 0));
-  --border: light-dark(oklch(0.875 0 0), oklch(0.125 0 0));
-  --ring: light-dark(red, yellow);
+  --border: light-dark(pink, pink);
+  --ring: light-dark(pink, pink);
 }
 
 @theme inline {
@@ -21,8 +23,11 @@
   --font-body: var(--font-body);
   --font-ui: var(--font-ui);
 
+  --color-accent: var(--accent);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-muted: var(--muted);
+
   --color-border: var(--border);
   --color-ring: var(--ring);
   /*
@@ -45,14 +50,16 @@
 }
 
 @layer base {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     @apply border-border outline-ring/50;
   }
   html {
-    @apply font-body text-foreground bg-background;
+    @apply bg-background font-body text-foreground;
   }
   body {
-    @apply font-body text-foreground bg-background;
+    @apply bg-background font-body text-foreground;
     position: relative;
     min-height: 100dvh;
     -webkit-font-smoothing: antialiased;
@@ -60,10 +67,20 @@
     text-rendering: optimizeLegibility;
     line-height: 1.5;
   }
-  h1,h2,h3,h4,h5,h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     overflow-wrap: break-word;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     text-wrap: balance;
   }
