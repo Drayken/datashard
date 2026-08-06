@@ -53,6 +53,22 @@ export default defineConfig({
         ],
       },
     },
+    {
+      provider: fontProviders.local(),
+      name: "Noto Sans Mono",
+      cssVariable: "--font-noto-sans-mono",
+      fallbacks: ["monospace"],
+      options: {
+        variants: [
+          {
+            src: ["./src/assets/fonts/noto-sans-mono.woff2"],
+            weight: "100 900",
+            style: "normal",
+            display: "swap",
+          },
+        ],
+      },
+    },
   ],
 
   vite: {
