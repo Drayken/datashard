@@ -3,13 +3,12 @@ import { SITE_TITLE } from "@/lib/consts";
 import HeaderLink from "@/components/HeaderLink.astro";
 ---
 
-<header>
+<header class="border-b px-12 font-ui uppercase">
   <nav>
-    <a href="/">{SITE_TITLE}</a>
-    <div>
-      <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
-      <HeaderLink href="/about">About</HeaderLink>
-    </div>
+    <ul class="flex h-18 items-center gap-8 *:grid *:h-full *:shrink-0 *:place-items-center">
+      <a href="/" class="mr-auto pr-2 text-2xl tracking-[0.3em]">{SITE_TITLE}</a>
+      <HeaderLink href="/echoes" class="px-2">Echoes</HeaderLink>
+      <HeaderLink href="/about" class="px-2">About</HeaderLink>
+    </ul>
   </nav>
 </header>

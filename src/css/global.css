@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* * {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+} */
+
 :root {
   color-scheme: light dark;
 
@@ -14,7 +18,6 @@
   --background: light-dark(pink, oklch(0.1448 0 0));
   --muted: light-dark(pink, oklch(0.2593 0 0));
 
-  --border: light-dark(pink, pink);
   --ring: light-dark(pink, pink);
 }
 
@@ -28,7 +31,6 @@
   --color-background: var(--background);
   --color-muted: var(--muted);
 
-  --color-border: var(--border);
   --color-ring: var(--ring);
   /*
    * Motion — animations.dev easing scale (see .agents/skills/web-animation-design)
@@ -53,7 +55,7 @@
   *,
   *::before,
   *::after {
-    @apply border-border outline-ring/50;
+    @apply border-muted outline-ring/50;
   }
   html {
     @apply bg-background font-body text-foreground;
@@ -95,5 +97,60 @@
   [role="menuitem"]:not(:disabled),
   [role="menuitemradio"]:not(:disabled) {
     cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .hero-mask {
+    -webkit-mask-size: auto 100%;
+    mask-size: auto 100%;
+    -webkit-mask-position: right bottom;
+    mask-position: right bottom;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  .hero-mask-base {
+    -webkit-mask-image: url(/hero-base.webp);
+    mask-image: url(/hero-base.webp);
+  }
+  .hero-mask-accent {
+    -webkit-mask-image: url(/hero-accent.webp);
+    mask-image: url(/hero-accent.webp);
+  }
+
+  /* L-shaped corner brackets (HUD / viewfinder frame) */
+  .corner-border {
+    --corner-size: 0.75rem;
+    --corner-width: 1px;
+    --corner-color: currentColor;
+
+    background-image:
+      linear-gradient(var(--corner-color), var(--corner-color)),
+      linear-gradient(var(--corner-color), var(--corner-color)),
+      linear-gradient(var(--corner-color), var(--corner-color)),
+      linear-gradient(var(--corner-color), var(--corner-color)),
+      linear-gradient(var(--corner-color), var(--corner-color)),
+      linear-gradient(var(--corner-color), var(--corner-color)),
+      linear-gradient(var(--corner-color), var(--corner-color)),
+      linear-gradient(var(--corner-color), var(--corner-color));
+    background-position:
+      0 0,
+      0 0,
+      100% 0,
+      100% 0,
+      0 100%,
+      0 100%,
+      100% 100%,
+      100% 100%;
+    background-size:
+      var(--corner-size) var(--corner-width),
+      var(--corner-width) var(--corner-size),
+      var(--corner-size) var(--corner-width),
+      var(--corner-width) var(--corner-size),
+      var(--corner-size) var(--corner-width),
+      var(--corner-width) var(--corner-size),
+      var(--corner-size) var(--corner-width),
+      var(--corner-width) var(--corner-size);
+    background-repeat: no-repeat;
   }
 }
