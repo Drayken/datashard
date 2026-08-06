@@ -8,9 +8,11 @@
   --font-body: var(--font-noto-sans);
   --font-ui: var(--font-noto-sans-mono);
 
-  --foreground: light-dark(oklch(0, 0, 0), oklch(1, 0, 0));
-  --background: light-dark(oklch(1, 0, 0), oklch(0, 0, 0));
-  --border: light-dark(oklch(0.875, 0, 0), oklch(0.125, 0, 0));
+  --accent: light-dark(oklch(0.66 0.2008 32.29), oklch(0.66 0.2008 32.29));
+
+  --foreground: light-dark(oklch(0 0 0), oklch(1 0 0));
+  --background: light-dark(oklch(1 0 0), oklch(0 0 0));
+  --border: light-dark(oklch(0.875 0 0), oklch(0.125 0 0));
   --ring: light-dark(red, yellow);
 }
 
