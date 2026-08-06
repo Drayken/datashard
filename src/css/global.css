@@ -4,12 +4,14 @@
 :root {
   color-scheme: light dark;
 
-  --font-heading: var(--font-atkinson);
-  --font-body: var(--font-atkinson);
+  --font-heading: var(--font-noto-serif);
+  --font-body: var(--font-noto-serif);
   --font-ui: "monospace";
 
-  --foreground: light-dark(black, white);
-  --background: light-dark(white, black);
+  --foreground: light-dark(oklch(0, 0, 0), oklch(1, 0, 0));
+  --background: light-dark(oklch(1, 0, 0), oklch(0, 0, 0));
+  --border: light-dark(oklch(0.875, 0, 0), oklch(0.125, 0, 0));
+  --ring: light-dark(red, yellow);
 }
 
 @theme inline {
@@ -19,7 +21,8 @@
 
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-
+  --color-border: var(--border);
+  --color-ring: var(--ring);
   /*
    * Motion — animations.dev easing scale (see .agents/skills/web-animation-design)
    * Use ease-out-* for enter/exit; ease-in-out-* for on-screen movement.
@@ -40,8 +43,37 @@
 }
 
 @layer base {
+  *, *::before, *::after {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-body text-foreground bg-background;
+  }
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    @apply font-body text-foreground bg-background;
+    position: relative;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    overflow-wrap: break-word;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading text-balance;
+  }
+  p {
+    @apply text-pretty;
+  }
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  [role="menuitem"]:not(:disabled),
+  [role="menuitemradio"]:not(:disabled) {
+    cursor: pointer;
   }
 }

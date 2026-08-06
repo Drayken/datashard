@@ -11,21 +11,21 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.local(),
-      name: "Atkinson",
-      cssVariable: "--font-atkinson",
-      fallbacks: ["sans-serif"],
+      name: "Noto Serif Variable",
+      cssVariable: "--font-noto-serif",
+      fallbacks: ["serif"],
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/atkinson-regular.woff"],
-            weight: 400,
+            src: ["./src/assets/fonts/noto-serif-normal.woff2"],
+            weight: "100 900",
             style: "normal",
             display: "swap",
           },
           {
-            src: ["./src/assets/fonts/atkinson-bold.woff"],
-            weight: 700,
-            style: "normal",
+            src: ["./src/assets/fonts/noto-serif-italic.woff2"],
+            weight: "100 900",
+            style: "italic",
             display: "swap",
           },
         ],
