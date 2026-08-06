@@ -16,8 +16,9 @@
   --accent: light-dark(oklch(0.66 0.2008 32.29), oklch(0.66 0.2008 32.29));
   --foreground: light-dark(pink, oklch(0.8131 0.0307 70.65));
   --background: light-dark(pink, oklch(0.1448 0 0));
-  --muted: light-dark(pink, oklch(0.2593 0 0));
+  --muted: light-dark(pink, oklch(0.584 0.0038 145.53));
 
+  --border: light-dark(pink, oklch(0.2593 0 0));
   --ring: light-dark(pink, pink);
 }
 
@@ -30,8 +31,9 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-muted: var(--muted);
-
+  --color-border: var(--border);
   --color-ring: var(--ring);
+
   /*
    * Motion — animations.dev easing scale (see .agents/skills/web-animation-design)
    * Use ease-out-* for enter/exit; ease-in-out-* for on-screen movement.
@@ -55,7 +57,7 @@
   *,
   *::before,
   *::after {
-    @apply border-muted outline-ring/50;
+    @apply border-border outline-ring/50;
   }
   html {
     @apply bg-background font-body text-foreground;
