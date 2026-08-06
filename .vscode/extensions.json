@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "bradlc.vscode-tailwindcss",
+    "coderabbit.coderabbit-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "GitHub.vscode-pull-request-github",
+    "github.vscode-github-actions",
+    "unifiedjs.vscode-mdx",
+    "YoavBls.pretty-ts-errors"
+  ],
+  "unwantedRecommendations": ["oxc.oxc-vscode"]
+}

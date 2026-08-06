@@ -1,0 +1,33 @@
+---
+import type { ImageMetadata } from "astro";
+import BaseHead from "@/components/BaseHead.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/consts";
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: ImageMetadata | undefined;
+}
+
+const { title = SITE_TITLE, description = SITE_DESCRIPTION, image } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} />
+  </head>
+  <body>
+    <div
+      class="pointer-events-none fixed inset-0 z-50 size-full bg-[url('/noise.webp')] bg-repeat opacity-[0.075] select-none"
+      aria-hidden="true">
+    </div>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
