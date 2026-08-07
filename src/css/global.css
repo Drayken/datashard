@@ -60,7 +60,7 @@
     @apply border-border outline-ring/50;
   }
   html {
-    @apply bg-background font-body text-body;
+    @apply bg-background font-body font-medium text-body;
     @media (prefers-reduced-motion: no-preference) {
       scroll-behavior: smooth;
     }
