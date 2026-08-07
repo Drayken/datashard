@@ -14,8 +14,13 @@ const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
         Fragments of the Digital Frontier
       </h1>
       <p class="ui-text mb-16 max-w-md text-lg text-muted">AN ARCHIVE BY @KGDRAYKEN</p>
-      <a href={latestHref} class="ui-text flex items-center gap-2 text-lg">
-        READ THE LATEST <ArrowUpRight class="-mb-0.5 size-4" />
+      <a
+        href={latestHref}
+        class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg transition-all duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
+        READ LATEST ENTRY
+        <ArrowUpRight
+          class="-mb-0.5 size-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-none motion-reduce:group-focus-visible:translate-none"
+        />
       </a>
     </div>
 
