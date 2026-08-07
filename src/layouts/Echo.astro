@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
 import Shell from "@/layouts/Shell.astro";
@@ -7,11 +7,18 @@ import Shell from "@/layouts/Shell.astro";
 type Props = CollectionEntry<"echoes">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const heroMask = (await getImage({ src: heroImage, width: 1020, format: "webp" })).src;
+
+// https://github.com/tailwindlabs/tailwindcss-typography
 ---
 
 <Shell title={title} description={description} image={heroImage}>
-  <main class="mx-auto prose w-full max-w-7xl dark:prose-invert">
-    <Image width={1020} height={510} src={heroImage} alt="" />
+  <main class="mx-auto prose w-full grow py-16 prose-datashard lg:prose-lg prose-pre:rounded-none">
+    <div
+      class="luminance-mask not-prose h-80 w-full bg-foreground"
+      style={`--mask: url(${heroMask}); --mask-size: cover`}
+      aria-hidden>
+    </div>
     <div>
       <FormattedDate date={pubDate} />
       {
