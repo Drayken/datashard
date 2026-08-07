@@ -38,30 +38,30 @@ const [featured, ...rest] = echoes;
         </section>
       )
     }
-    <hr />
+    <div role="separator" class="h-px w-full bg-border"></div>
     <section>
-      <h2>LATEST ECHOES</h2>
+      <h2 class="ui-text mb-8 text-muted">LATEST ECHOES</h2>
       <ul class="border-y">
         {
           rest.map((echo) => (
-            <li class="not-last:border-b">
-              <a href={`/echoes/${echo.id}/`} class="group grid grid-cols-2 py-8">
-                <div>
-                  <h3 class="mb-2 font-heading text-3xl group-hover:underline group-focus-visible:underline">
-                    {echo.data.title}
-                  </h3>
-                  <span class="ui-text text-muted">
-                    <FormattedDate date={echo.data.pubDate} />
-                  </span>
-                </div>
-                <Image
-                  src={echo.data.heroImage}
-                  width={720}
-                  height={360}
-                  alt=""
-                  class="h-0 min-h-full w-full object-cover object-center opacity-50 sepia"
-                />
-              </a>
+            <li class="grid grid-cols-2 py-8 not-last:border-b">
+              <div>
+                <a
+                  href={`/echoes/${echo.id}/`}
+                  class="mb-2 font-heading text-3xl hover:underline focus-visible:underline">
+                  <h3>{echo.data.title}</h3>
+                </a>
+                <span class="ui-text text-muted">
+                  <FormattedDate date={echo.data.pubDate} />
+                </span>
+              </div>
+              <Image
+                src={echo.data.heroImage}
+                width={720}
+                height={360}
+                alt=""
+                class="h-0 min-h-full w-full object-cover object-center opacity-50 sepia"
+              />
             </li>
           ))
         }
