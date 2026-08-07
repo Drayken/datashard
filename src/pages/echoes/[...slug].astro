@@ -1,0 +1,20 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Echo from "@/layouts/Echo.astro";
+
+export async function getStaticPaths() {
+  const echoes = await getCollection("echoes");
+  return echoes.map((echo) => ({
+    params: { slug: echo.id },
+    props: echo,
+  }));
+}
+type Props = CollectionEntry<"echoes">;
+
+const echo = Astro.props;
+const { Content } = await render(echo);
+---
+
+<Echo {...echo.data}>
+  <Content />
+</Echo>

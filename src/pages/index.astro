@@ -1,6 +1,10 @@
 ---
+import { getCollection } from "astro:content";
 import Shell from "@/layouts/Shell.astro";
 import ArrowUpRight from "phosphor-astro/ArrowUpRight.astro";
+
+const latest = (await getCollection("echoes")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
 ---
 
 <Shell>
@@ -10,7 +14,7 @@ import ArrowUpRight from "phosphor-astro/ArrowUpRight.astro";
         Fragments of the Digital Frontier
       </h1>
       <p class="ui-text mb-16 max-w-md text-lg text-muted">AN ARCHIVE BY @KGDRAYKEN</p>
-      <a href="/" class="ui-text flex items-center gap-2 text-lg">
+      <a href={latestHref} class="ui-text flex items-center gap-2 text-lg">
         READ THE LATEST <ArrowUpRight class="-mb-0.5 size-4" />
       </a>
     </div>

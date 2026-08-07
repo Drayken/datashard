@@ -8,14 +8,14 @@ export async function GET(context) {
     throw new Error("site is not configured in astro.config");
   }
 
-  const posts = await getCollection("blog");
+  const echoes = await getCollection("echoes");
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     site: context.site,
-    items: posts.map((post) => ({
-      ...post.data,
-      link: `/blog/${post.id}/`,
+    items: echoes.map((echo) => ({
+      ...echo.data,
+      link: `/echoes/${echo.id}/`,
     })),
   });
 }

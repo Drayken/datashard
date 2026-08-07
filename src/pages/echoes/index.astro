@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import FormattedDate from "@/components/FormattedDate.astro";
+import Shell from "@/layouts/Shell.astro";
+
+const echoes = (await getCollection("echoes")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Shell>
+  <section>
+    <ul>
+      {
+        echoes.map((echo) => (
+          <li>
+            <a href={`/echoes/${echo.id}/`}>
+              {echo.data.heroImage && <Image width={720} height={360} src={echo.data.heroImage} alt="" />}
+              <h4>{echo.data.title}</h4>
+              <p>
+                <FormattedDate date={echo.data.pubDate} />
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Shell>
