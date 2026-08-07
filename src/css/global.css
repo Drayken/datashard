@@ -12,13 +12,13 @@
   --font-body: var(--font-noto-sans);
   --font-ui: var(--font-noto-sans-mono);
 
-  /* Pink = Not set yet */
   --accent: light-dark(oklch(0.66 0.2008 32.29), oklch(0.66 0.2008 32.29));
+  --body: light-dark(oklch(0.1448 0 0), oklch(0.5348 0.0235 91.72));
   --foreground: light-dark(oklch(0.1448 0 0), oklch(0.8131 0.0307 70.65));
   --background: light-dark(oklch(0.8131 0.0307 70.65), oklch(0.1448 0 0));
-  --muted: light-dark(oklch(0.584 0.0038 145.53), oklch(0.584 0.0038 145.53));
-
+  --muted: light-dark(oklch(0.584 0.0038 145.53), oklch(0.4147 0.0026 197.06));
   --border: light-dark(oklch(67.64% 0 271.152), oklch(0.2593 0 0));
+  --ring: light-dark(oklch(67.64% 0 271.152), oklch(0.2593 0 0));
 }
 
 @theme inline {
@@ -27,6 +27,7 @@
   --font-ui: var(--font-ui);
 
   --color-accent: var(--accent);
+  --color-body: var(--body);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-muted: var(--muted);
@@ -59,13 +60,13 @@
     @apply border-border outline-ring/50;
   }
   html {
-    @apply bg-background font-body text-foreground;
+    @apply bg-background font-body text-body;
     @media (prefers-reduced-motion: no-preference) {
       scroll-behavior: smooth;
     }
   }
   body {
-    @apply bg-background font-body text-foreground;
+    @apply bg-background font-body text-body;
     position: relative;
     min-height: 100dvh;
     -webkit-font-smoothing: antialiased;
@@ -78,7 +79,8 @@
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  p {
     overflow-wrap: break-word;
   }
   h1,
@@ -87,6 +89,7 @@
   h4,
   h5,
   h6 {
+    color: var(--color-foreground);
     font-family: var(--font-heading);
     text-wrap: balance;
   }
@@ -124,9 +127,9 @@
 }
 
 @utility prose-datashard {
-  --tw-prose-body: var(--color-foreground);
+  --tw-prose-body: var(--color-body);
   --tw-prose-headings: var(--color-foreground);
-  --tw-prose-lead: var(--color-foreground);
+  --tw-prose-lead: var(--color-body);
   --tw-prose-links: var(--color-accent);
   --tw-prose-bold: inherit;
   --tw-prose-counters: inherit;
@@ -136,8 +139,7 @@
   --tw-prose-quote-borders: var(--color-accent);
   --tw-prose-captions: var(--color-muted);
   --tw-prose-code: var(--color-muted);
-  --tw-prose-pre-code: var(--color-foreground);
-  --tw-prose-pre-bg: color-mix(in oklch, var(--color-foreground) 10%, var(--color-background));
+  --tw-prose-pre-code: var(--color-body);
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
 }

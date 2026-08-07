@@ -29,10 +29,10 @@ const restMasks = await Promise.all(
           <div>
             <FormattedDate date={featured.data.pubDate} />
             <h2 class="mb-8 max-w-3xl font-heading text-7xl leading-tight">{featured.data.title}</h2>
-            <p class="mb-16 max-w-md font-ui text-lg text-muted">{featured.data.description}</p>
+            <p class="mb-16 max-w-md font-ui text-lg">{featured.data.description}</p>
             <a
               href={`/echoes/${featured.id}/`}
-              class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg transition-all duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
+              class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg text-foreground transition-all duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
               READ ECHO
               <ArrowUpRight class="-mb-0.5 size-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-none motion-reduce:group-focus-visible:translate-none" />
             </a>
