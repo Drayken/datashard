@@ -46,11 +46,11 @@ const featuredMask = featured
           rest.map((echo) => (
             <li class="grid grid-cols-2 py-8 not-last:border-b">
               <div>
-                <a
-                  href={`/echoes/${echo.id}/`}
-                  class="mb-2 font-heading text-3xl hover:underline focus-visible:underline">
-                  <h3>{echo.data.title}</h3>
-                </a>
+                <h3 class="mb-2">
+                  <a href={`/echoes/${echo.id}/`} class="font-heading text-3xl hover:underline focus-visible:underline">
+                    {echo.data.title}
+                  </a>
+                </h3>
                 <span class="ui-text text-muted">
                   <FormattedDate date={echo.data.pubDate} />
                 </span>
