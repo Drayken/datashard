@@ -10,8 +10,8 @@ const [featured, ...rest] = echoes;
 ---
 
 <Shell>
-  <main class="flex flex-col gap-16 px-12 py-16">
-    <h1 class="sr-only">All Echoes</h1>
+  <main class="flex flex-col gap-8 px-12 py-16">
+    <h1 class="sr-only">Latest Echoes</h1>
     {
       featured && (
         <section class="grid grid-cols-2">
@@ -38,9 +38,8 @@ const [featured, ...rest] = echoes;
         </section>
       )
     }
-    <div role="separator" class="h-px w-full bg-border"></div>
+    <div role="separator" class="bg-dotted h-16 w-full"></div>
     <section>
-      <h2 class="ui-text mb-8 text-muted">LATEST ECHOES</h2>
       <ul class="border-y">
         {
           rest.map((echo) => (

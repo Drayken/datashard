@@ -2,7 +2,7 @@
 title: "A Brief History of Half-Downloads"
 description: "Incomplete files as accidental archives of interruption."
 pubDate: "Feb 11 2026"
-heroImage: "../../assets/echo-placeholder-1.jpg"
+heroImage: "../../assets/placeholder-2.png"
 ---
 
 `.part`, `.tmp`, `.crdownload`—the suffixes of almost.

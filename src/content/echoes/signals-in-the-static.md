@@ -2,7 +2,7 @@
 title: "Signals in the Static"
 description: "What remains when the noise finally settles into something readable."
 pubDate: "Jan 12 2025"
-heroImage: "../../assets/echo-placeholder-1.jpg"
+heroImage: "../../assets/placeholder-5.png"
 ---
 
 The first time the feed went quiet, nobody noticed. Silence looked too much like latency.

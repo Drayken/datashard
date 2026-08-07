@@ -2,7 +2,7 @@
 title: "The Last Unread Tab"
 description: "On leaving one window open as insurance against forgetting."
 pubDate: "Jul 22 2025"
-heroImage: "../../assets/echo-placeholder-1.jpg"
+heroImage: "../../assets/placeholder-1.png"
 ---
 
 Browsers fill up the way kitchens do: gradually, then all at once.

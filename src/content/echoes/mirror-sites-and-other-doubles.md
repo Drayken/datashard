@@ -2,7 +2,7 @@
 title: "Mirror Sites and Other Doubles"
 description: "Redundancy as ritual, backup as belief."
 pubDate: "Nov 01 2025"
-heroImage: "../../assets/echo-placeholder-1.jpg"
+heroImage: "../../assets/placeholder-4.png"
 ---
 
 A mirror is supposed to be identical. In practice it is only loyal.

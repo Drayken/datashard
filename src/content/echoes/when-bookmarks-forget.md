@@ -2,7 +2,7 @@
 title: "When Bookmarks Forget"
 description: "A short note on link rot, memory, and the quiet politics of 404."
 pubDate: "Apr 18 2025"
-heroImage: "../../assets/echo-placeholder-1.jpg"
+heroImage: "../../assets/placeholder-3.png"
 ---
 
 A bookmark is a promise made to a future self who may never arrive.

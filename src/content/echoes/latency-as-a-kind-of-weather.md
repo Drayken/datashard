@@ -2,7 +2,7 @@
 title: "Latency as a Kind of Weather"
 description: "Ping times, packet storms, and the mood of a distributed afternoon."
 pubDate: "May 09 2025"
-heroImage: "../../assets/echo-placeholder-1.jpg"
+heroImage: "../../assets/placeholder-2.png"
 ---
 
 You can feel a region go soft before the dashboards admit it.
