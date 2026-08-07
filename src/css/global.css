@@ -126,7 +126,7 @@
 
 @layer utilities {
   .ui-text {
-    @apply font-ui tracking-widest text-nowrap whitespace-nowrap uppercase;
+    @apply font-ui tracking-widest uppercase;
   }
   .corner-border {
     --corner-size: 0.75rem;
