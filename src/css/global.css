@@ -115,10 +115,6 @@
   .hero-mask-accent {
     -webkit-mask-image: url(/hero-accent.webp);
     mask-image: url(/hero-accent.webp);
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-position: 0 0;
-    mask-position: 0 0;
   }
   .hero-accent-flicker {
     filter: drop-shadow(0 0 0.75rem color-mix(in oklch, var(--accent) 40%, transparent));
