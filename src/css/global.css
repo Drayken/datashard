@@ -100,9 +100,6 @@
   [role="menuitemradio"]:not(:disabled) {
     cursor: pointer;
   }
-}
-
-@layer utilities {
   .hero-mask {
     -webkit-mask-size: auto 100%;
     mask-size: auto 100%;
@@ -122,36 +119,20 @@
     mask-size: 100% 100%;
     -webkit-mask-position: 0 0;
     mask-position: 0 0;
-    clip-path: polygon(40% 58%, 73% 58%, 73% 40%, 78% 40%, 78% 95%, 70% 95%, 70% 63%, 40% 63%);
-    animation: hero-accent-fill 8s var(--ease-in-out-cubic) infinite alternate;
   }
-
-  @keyframes hero-accent-fill {
-    from {
-      /* filled */
-      clip-path: polygon(40% 58%, 73% 58%, 73% 40%, 78% 40%, 78% 95%, 70% 95%, 70% 63%, 40% 63%);
-    }
-    to {
-      /* empty */
-      clip-path: polygon(59% 58%, 73% 58%, 73% 94%, 78% 94%, 78% 95%, 70% 95%, 70% 63%, 59% 63%);
-    }
+  .hero-accent-flicker {
+    filter: drop-shadow(0 0 0.75rem color-mix(in oklch, var(--accent) 40%, transparent));
   }
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-mask-accent {
-      animation: none;
-    }
-  }
-
+@layer utilities {
   .ui-text {
     @apply font-ui tracking-widest;
   }
-
   .corner-border {
     --corner-size: 0.75rem;
     --corner-width: 1px;
     --corner-color: currentColor;
-
     background-image:
       linear-gradient(var(--corner-color), var(--corner-color)),
       linear-gradient(var(--corner-color), var(--corner-color)),
@@ -180,5 +161,52 @@
       var(--corner-size) var(--corner-width),
       var(--corner-width) var(--corner-size);
     background-repeat: no-repeat;
+  }
+}
+
+@layer animations {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-accent-flicker {
+      animation: hero-accent-flicker 5s linear infinite;
+    }
+
+    @keyframes hero-accent-flicker {
+      0%,
+      9% {
+        opacity: 1;
+      }
+      10%,
+      11% {
+        opacity: 0.55;
+      }
+      12%,
+      39% {
+        opacity: 1;
+      }
+      40%,
+      41% {
+        opacity: 0.7;
+      }
+      42%,
+      43% {
+        opacity: 1;
+      }
+      44%,
+      45% {
+        opacity: 0.85;
+      }
+      46%,
+      69% {
+        opacity: 1;
+      }
+      70%,
+      71% {
+        opacity: 0.4;
+      }
+      72%,
+      100% {
+        opacity: 1;
+      }
+    }
   }
 }
