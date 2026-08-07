@@ -13,7 +13,7 @@
   --font-ui: var(--font-noto-sans-mono);
 
   --accent: light-dark(oklch(0.66 0.2008 32.29), oklch(0.66 0.2008 32.29));
-  --body: light-dark(oklch(0.1448 0 0), oklch(0.5348 0.0235 91.72));
+  --body: light-dark(oklch(0.1448 0 0), oklch(66.961% 0.028 92.505));
   --foreground: light-dark(oklch(0.1448 0 0), oklch(0.8131 0.0307 70.65));
   --background: light-dark(oklch(0.8131 0.0307 70.65), oklch(0.1448 0 0));
   --muted: light-dark(oklch(0.584 0.0038 145.53), oklch(0.4147 0.0026 197.06));
