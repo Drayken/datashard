@@ -61,6 +61,9 @@
   }
   html {
     @apply bg-background font-body text-foreground;
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
   body {
     @apply bg-background font-body text-foreground;
@@ -123,7 +126,7 @@
 
 @layer utilities {
   .ui-text {
-    @apply font-ui tracking-widest;
+    @apply font-ui tracking-widest text-nowrap whitespace-nowrap uppercase;
   }
   .corner-border {
     --corner-size: 0.75rem;
@@ -157,6 +160,11 @@
       var(--corner-size) var(--corner-width),
       var(--corner-width) var(--corner-size);
     background-repeat: no-repeat;
+  }
+  .bg-dotted {
+    background-image: radial-gradient(var(--dot-color, var(--border)) 1px, transparent 1.5px);
+    background-size: 0.75rem 0.75rem;
+    background-clip: padding-box;
   }
 }
 
