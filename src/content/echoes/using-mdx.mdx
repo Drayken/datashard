@@ -19,10 +19,18 @@ Here is how you import and use a UI component inside of MDX.
 When you open this page in the browser, you should see the clickable button below.
 
 import HeaderLink from "@/components/HeaderLink.astro";
+import LuminanceImage from "@/components/LuminanceImage.astro";
+import inlineMask from "../../assets/placeholder-1.webp";
 
 <HeaderLink href="#" onclick="alert('clicked!')">
   Embedded component in MDX
 </HeaderLink>
+
+## Luminance masks in content
+
+Inline images can use the same luminance-mask treatment as the article hero:
+
+<LuminanceImage src={inlineMask} alt="Placeholder illustration" />
 
 ## More Links
 
