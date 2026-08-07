@@ -118,6 +118,29 @@
   .hero-mask-accent {
     -webkit-mask-image: url(/hero-accent.webp);
     mask-image: url(/hero-accent.webp);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+    clip-path: polygon(40% 58%, 73% 58%, 73% 40%, 78% 40%, 78% 95%, 70% 95%, 70% 63%, 40% 63%);
+    animation: hero-accent-fill 8s var(--ease-in-out-cubic) infinite alternate;
+  }
+
+  @keyframes hero-accent-fill {
+    from {
+      /* filled */
+      clip-path: polygon(40% 58%, 73% 58%, 73% 40%, 78% 40%, 78% 95%, 70% 95%, 70% 63%, 40% 63%);
+    }
+    to {
+      /* empty */
+      clip-path: polygon(59% 58%, 73% 58%, 73% 94%, 78% 94%, 78% 95%, 70% 95%, 70% 63%, 59% 63%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-mask-accent {
+      animation: none;
+    }
   }
 
   .ui-text {
