@@ -9,13 +9,13 @@ const echoes = (await getCollection("echoes")).sort((a, b) => b.data.pubDate.val
 const [featured, ...rest] = echoes;
 
 const featuredMask = featured
-  ? (await getImage({ src: featured.data.heroImage, width: 1020, format: "webp" })).src
+  ? (await getImage({ src: featured.data.heroImage, width: 1024, format: "webp" })).src
   : undefined;
 
 const restMasks = await Promise.all(
   rest.map(async (echo) => ({
     echo,
-    mask: (await getImage({ src: echo.data.heroImage, width: 720, format: "webp" })).src,
+    mask: (await getImage({ src: echo.data.heroImage, width: 1024, format: "webp" })).src,
   }))
 );
 ---
@@ -58,8 +58,13 @@ const restMasks = await Promise.all(
       <ul class="border-y">
         {
           restMasks.map(({ echo, mask }) => (
-            <li class="grid grid-cols-2 py-8 not-last:border-b">
-              <div>
+            <li class="relative grid grid-cols-[auto_1fr] gap-8 not-last:border-b">
+              <div
+                class="luminance-mask aspect-square h-0 min-h-full w-auto bg-foreground"
+                style={`--mask: url(${mask}); --mask-size: contain`}
+                aria-hidden
+              />
+              <div class="py-8">
                 <h3 class="mb-2">
                   <a href={`/echoes/${echo.id}/`} class="font-heading text-3xl hover:underline focus-visible:underline">
                     {echo.data.title}
@@ -76,7 +81,7 @@ const restMasks = await Promise.all(
                 </span>
               </div>
               <div
-                class="luminance-mask aspect-square h-0 min-h-full w-auto bg-foreground"
+                class="luminance-mask pointer-events-none absolute inset-0 bg-foreground opacity-5"
                 style={`--mask: url(${mask}); --mask-size: cover`}
                 aria-hidden
               />
