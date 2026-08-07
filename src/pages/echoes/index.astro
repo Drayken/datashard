@@ -6,35 +6,44 @@ import Shell from "@/layouts/Shell.astro";
 import ArrowUpRight from "phosphor-astro/ArrowUpRight.astro";
 
 const echoes = (await getCollection("echoes")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const [featured, ...rest] = echoes;
 ---
 
 <Shell>
   <main class="flex flex-col gap-16 px-12 py-16">
     <h1 class="sr-only">All Echoes</h1>
-    <section class="grid grid-cols-2">
-      <div>
-        <span class="ui-text text-muted">July 24, 2026</span>
-        <h2 class="mb-8 max-w-3xl font-heading text-7xl leading-tight">The Interface Becomes the Document</h2>
-        <p class="mb-16 max-w-md font-ui text-lg text-muted">
-          As digital spaces age, interfaces calcify into documents, and documents erode into interfaces.
-        </p>
-        <a
-          href="/"
-          class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg transition-all duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
-          READ ECHO
-          <ArrowUpRight
-            class="-mb-0.5 size-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-none motion-reduce:group-focus-visible:translate-none"
+    {
+      featured && (
+        <section class="grid grid-cols-2">
+          <div>
+            <span class="ui-text text-muted">
+              <FormattedDate date={featured.data.pubDate} />
+            </span>
+            <h2 class="mb-8 max-w-3xl font-heading text-7xl leading-tight">{featured.data.title}</h2>
+            <p class="mb-16 max-w-md font-ui text-lg text-muted">{featured.data.description}</p>
+            <a
+              href={`/echoes/${featured.id}/`}
+              class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg transition-all duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
+              READ ECHO
+              <ArrowUpRight class="-mb-0.5 size-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-none motion-reduce:group-focus-visible:translate-none" />
+            </a>
+          </div>
+          <Image
+            src={featured.data.heroImage}
+            width={1020}
+            height={510}
+            alt=""
+            class="h-0 min-h-full w-full object-cover object-center"
           />
-        </a>
-      </div>
-      <img src="" alt="Preview image goes here" class="outline outline-accent/70" />
-    </section>
+        </section>
+      )
+    }
     <hr />
     <section>
       <h2>LATEST ECHOES</h2>
       <ul class="border-y">
         {
-          echoes.map((echo) => (
+          rest.map((echo) => (
             <li class="not-last:border-b">
               <a href={`/echoes/${echo.id}/`} class="group grid grid-cols-2 py-8">
                 <div>
@@ -50,7 +59,7 @@ const echoes = (await getCollection("echoes")).sort((a, b) => b.data.pubDate.val
                   width={720}
                   height={360}
                   alt=""
-                  class="h-0 min-h-full w-full object-cover object-center outline outline-accent/70"
+                  class="h-0 min-h-full w-full object-cover object-center opacity-50 sepia"
                 />
               </a>
             </li>
