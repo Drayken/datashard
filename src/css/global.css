@@ -6,7 +6,7 @@
 } */
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
   --font-heading: var(--font-noto-serif);
   --font-body: var(--font-noto-sans);
@@ -16,9 +16,8 @@
   --body: light-dark(oklch(0.1448 0 0), oklch(66.961% 0.028 92.505));
   --foreground: light-dark(oklch(0.1448 0 0), oklch(0.8131 0.0307 70.65));
   --background: light-dark(oklch(0.8131 0.0307 70.65), oklch(0.1448 0 0));
-  --muted: light-dark(oklch(0.1448 0 0), oklch(0.4147 0.0026 197.06));
+  --muted: light-dark(oklch(48.55% 0 271.152), oklch(0.4147 0.0026 197.06));
   --border: light-dark(oklch(67.64% 0 271.152), oklch(0.2593 0 0));
-  --ring: light-dark(oklch(67.64% 0 271.152), oklch(0.2593 0 0));
 }
 
 @theme inline {
@@ -32,7 +31,6 @@
   --color-background: var(--background);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --color-ring: var(--ring);
 
   /*
    * Motion — animations.dev easing scale (see .agents/skills/web-animation-design)
@@ -57,7 +55,7 @@
   *,
   *::before,
   *::after {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   html {
     @apply bg-background font-body font-medium text-body;
