@@ -1,0 +1,22 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Header from "@/components/Header.astro";
+import { SITE_TITLE } from "@/lib/consts";
+
+// TASK: Do this
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`404 - ${SITE_TITLE}`} description="Page Not Found" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>404</h1>
+      <p>Page Not Found</p>
+      <a href="/">Return Home</a>
+    </main>
+  </body>
+</html>
