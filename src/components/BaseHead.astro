@@ -22,9 +22,18 @@ const { title, description, image = FallbackImage } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="manifest" href="/metadata/manifest.webmanifest" />
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL("rss.xml", Astro.site)} />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Favicons -->
+<link rel="shortcut icon" href="/metadata/favicon.ico" />
+<link rel="icon" type="image/svg+xml" href="/metadata/icon.svg" />
+<link rel="icon" type="image/png" sizes="96x96" href="/metadata/icon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/metadata/apple-icon.png" />
+<link rel="mask-icon" href="/metadata/icon.svg" color="#0a0a0a" />
+
+<!-- Font preloads -->
 <Font cssVariable="--font-noto-serif" preload />
 <Font cssVariable="--font-noto-sans" preload />
 <Font cssVariable="--font-noto-sans-mono" preload />
@@ -34,14 +43,36 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
+<meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="author" content="Drayken" />
+
+<!-- Misc -->
+<meta name="application-name" content={SITE_TITLE} />
+<meta name="apple-mobile-web-app-title" content={SITE_TITLE} />
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+<meta name="color-scheme" content="light dark" />
+<meta name="msapplication-TileColor" content="#0a0a0a" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE_TITLE} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image.src, Astro.url)} />
+<meta property="og:image:width" content={String(image.width)} />
+<meta property="og:image:height" content={String(image.height)} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@KGDrayken" />
+<meta name="twitter:creator" content="@KGDrayken" />
+<meta name="twitter:url" content={Astro.url} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image.src, Astro.url)} />
