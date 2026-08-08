@@ -10,16 +10,17 @@ const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
 <Shell>
   <main class="relative flex grow flex-col justify-center px-6 py-16 lg:px-12">
     <div class="z-1">
-      <h1 class="mb-8 max-w-4xl font-heading text-[clamp(2rem,5vw,5rem)] leading-tight page-enter page-enter--0">
+      <h1
+        class="page-enter page-enter--0 mb-8 max-w-4xl font-heading text-[clamp(2rem,5vw,5rem)] leading-tight font-light">
         Fragments of the Digital Frontier
       </h1>
-      <p class="mb-16 max-w-md font-ui text-lg text-muted page-enter page-enter--1">Archive by @KGDrayken</p>
+      <p class="page-enter page-enter--1 mb-16 max-w-md font-ui text-lg text-muted">Archive by @KGDrayken</p>
       <a
         href={latestHref}
-        class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg text-foreground transition-colors duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background page-enter page-enter--2">
+        class="group ui-text page-enter page-enter--2 inline-flex items-center gap-2 border-b py-1 text-lg text-foreground transition-colors duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
         READ LATEST ECHO
         <ArrowUpRight
-          class="-mb-0.5 size-4 transition-transform duration-150 fine-hover:group-hover:translate-x-0.5 fine-hover:group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:fine-hover:group-hover:translate-none motion-reduce:group-focus-visible:translate-none"
+          class="-mb-0.5 size-4 transition-transform duration-150 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-focus-visible:translate-none fine-hover:group-hover:translate-x-0.5 fine-hover:group-hover:-translate-y-0.5 motion-reduce:fine-hover:group-hover:translate-none"
         />
       </a>
     </div>
@@ -33,7 +34,7 @@ const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
     </div>
     <div
       aria-hidden="true"
-      class="corner-border ui-text pointer-events-none absolute top-[30%] right-8 w-fit -translate-y-1/2 px-4 py-3 select-none page-enter-fade page-enter--3">
+      class="corner-border ui-text page-enter-fade page-enter--3 pointer-events-none absolute top-[30%] right-8 w-fit -translate-y-1/2 px-4 py-3 select-none">
       ORDER<br /> IS A MOMENT.<br /> ENTROPY<br /> IS THE STORY.
     </div>
   </main>
