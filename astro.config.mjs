@@ -7,7 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "http://localhost:4321",
+  site: "https://datashard.zxsn.workers.dev",
   trailingSlash: "ignore",
   prefetch: true,
   integrations: [mdx(), sitemap()],
