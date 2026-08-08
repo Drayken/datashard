@@ -4,36 +4,149 @@ import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
 import Shell from "@/layouts/Shell.astro";
 
+import XLogo from "phosphor-astro/XLogo.astro";
+import RedditLogo from "phosphor-astro/RedditLogo.astro";
+import Envelope from "phosphor-astro/Envelope.astro";
+import LinkSimple from "phosphor-astro/LinkSimple.astro";
+
 type Props = CollectionEntry<"echoes">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 const heroMask = (await getImage({ src: heroImage, width: 1020, format: "webp" })).src;
+const shareUrl = new URL(Astro.url.pathname, Astro.site).href;
 
 // https://github.com/tailwindlabs/tailwindcss-typography
 ---
 
 <Shell title={title} description={description} image={heroImage}>
-  <main
-    class="mx-auto prose w-full grow pt-8 pb-16 prose-datashard lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none">
-    <div
-      class="luminance-mask not-prose mb-8 h-80 w-full bg-foreground page-enter-hero"
-      style={`--mask: url(${heroMask}); --mask-size: cover`}
-      aria-label="Article Cover Image">
-    </div>
-    <h1 class="page-enter page-enter--0">{title}</h1>
-    <small class="font-ui text-muted page-enter-fade page-enter--1">
-      <FormattedDate date={pubDate} />{
-        updatedDate && (
-          <>
-            {" "}
-            &bull; UPDATED <FormattedDate date={updatedDate} />
-          </>
-        )
-      }
-    </small>
-    <hr class="my-8! page-enter-fade page-enter--2" />
-    <div class="page-enter-fade page-enter--3">
-      <slot />
-    </div>
+  <main class="w-full grow px-6 pt-8 pb-16 lg:px-12">
+    <article
+      class="prose mx-auto w-full prose-datashard lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none">
+      <div
+        class="luminance-mask not-prose page-enter-hero mb-8 h-80 w-full bg-foreground"
+        style={`--mask: url(${heroMask}); --mask-size: cover`}
+        aria-label="Article Cover Image">
+      </div>
+      <h1 class="page-enter page-enter--0">{title}</h1>
+      <small class="page-enter-fade page-enter--1 font-ui text-muted">
+        <FormattedDate date={pubDate} />{
+          updatedDate && (
+            <>
+              {" "}
+              &bull; UPDATED <FormattedDate date={updatedDate} />
+            </>
+          )
+        }
+      </small>
+      <hr class="page-enter-fade page-enter--2 my-8!" />
+      <div class="page-enter-fade page-enter--3">
+        <slot />
+      </div>
+      <hr />
+      <div class="ui-text not-prose flex items-center gap-4 text-muted select-none *:shrink-0">
+        <span>Share on</span>
+        <a
+          href={`https://x.com/intent/post?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="grid size-8 place-items-center p-1 hover:text-accent focus-visible:text-accent"
+          aria-label="Share on X">
+          <XLogo class="size-full" aria-hidden="true" />
+        </a>
+        <a
+          href={`https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(title)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="grid size-8 place-items-center p-1 hover:text-accent focus-visible:text-accent"
+          aria-label="Share on Reddit">
+          <RedditLogo class="size-full" aria-hidden="true" />
+        </a>
+        <a
+          href={`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${title}\n\n${shareUrl}`)}`}
+          aria-label="Share via email"
+          class="grid size-8 place-items-center p-1 hover:text-accent focus-visible:text-accent">
+          <Envelope class="size-full" aria-hidden="true" />
+        </a>
+        <button
+          type="button"
+          aria-label="Copy link"
+          class="relative grid size-8 place-items-center overflow-visible p-1 hover:text-accent focus-visible:text-accent"
+          data-share-copy
+          data-share-url={shareUrl}>
+          <LinkSimple class="size-full" aria-hidden="true" />
+          <span class="share-copy-label ui-text pointer-events-none absolute bottom-full left-1/2 mb-1 text-xs text-accent" aria-hidden="true">
+            Copied
+          </span>
+        </button>
+        <span class="sr-only" aria-live="polite" data-share-copy-status></span>
+      </div>
+    </article>
   </main>
 </Shell>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-share-copy]");
+  const status = document.querySelector<HTMLElement>("[data-share-copy-status]");
+  const endHandlers = new WeakMap<HTMLButtonElement, (event: AnimationEvent) => void>();
+
+  function clearCopiedState(button: HTMLButtonElement): void {
+    const previous = endHandlers.get(button);
+    if (previous) {
+      button.removeEventListener("animationend", previous);
+      endHandlers.delete(button);
+    }
+    delete button.dataset.copied;
+    if (status) status.textContent = "";
+  }
+
+  function showCopiedFeedback(button: HTMLButtonElement): void {
+    clearCopiedState(button);
+
+    // Retrigger CSS animation on rapid re-copy.
+    void button.offsetWidth;
+    button.dataset.copied = "";
+    if (status) status.textContent = "Link copied";
+
+    const onEnd = (event: AnimationEvent) => {
+      if (!(event.target instanceof HTMLElement) || !event.target.classList.contains("share-copy-label")) {
+        return;
+      }
+      clearCopiedState(button);
+    };
+
+    endHandlers.set(button, onEnd);
+    button.addEventListener("animationend", onEnd);
+  }
+
+  function showCopyFailure(button: HTMLButtonElement): void {
+    clearCopiedState(button);
+    if (status) status.textContent = "Couldn't copy link";
+  }
+
+  async function copyShareUrl(button: HTMLButtonElement): Promise<void> {
+    const url = button.dataset.shareUrl;
+    if (!url) {
+      showCopyFailure(button);
+      return;
+    }
+
+    if (!navigator.clipboard || !window.isSecureContext) {
+      showCopyFailure(button);
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(url);
+      showCopiedFeedback(button);
+    } catch (err: unknown) {
+      console.warn("Copy to clipboard failed:", err);
+      showCopyFailure(button);
+    }
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      void copyShareUrl(button);
+    });
+  });
+</script>
