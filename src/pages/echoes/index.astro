@@ -1,8 +1,8 @@
 ---
 import { getImage } from "astro:assets";
 import { getCollection } from "astro:content";
-import FormattedDate from "@/components/FormattedDate.astro";
 import Shell from "@/layouts/Shell.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
 import ArrowUpRight from "phosphor-astro/ArrowUpRight.astro";
 
 const echoes = (await getCollection("echoes")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -27,7 +27,7 @@ const restMasks = await Promise.all(
       featured && (
         <section class="grid gap-8 [grid-template-areas:'stack'] lg:grid-cols-2 lg:[grid-template-areas:'content_mask']">
           <div class="z-1 [grid-area:stack] lg:[grid-area:content]">
-            <span class="mb-2 block font-ui text-sm text-muted lg:text-base page-enter page-enter--0">
+            <span class="page-enter page-enter--0 mb-2 block font-ui text-sm text-muted lg:text-base">
               <FormattedDate date={featured.data.pubDate} />
               {featured.data.updatedDate && (
                 <>
@@ -36,21 +36,18 @@ const restMasks = await Promise.all(
                 </>
               )}
             </span>
-            <h2 class="mb-8 max-w-3xl font-heading text-[clamp(2rem,5vw,4.5rem)] leading-tight page-enter page-enter--1">
+            <h2 class="page-enter page-enter--1 mb-8 max-w-3xl font-heading text-[clamp(2rem,5vw,4.5rem)] leading-tight">
               {featured.data.title}
             </h2>
-            <p class="mb-8 max-w-md font-ui text-lg page-enter page-enter--2">{featured.data.description}</p>
+            <p class="page-enter page-enter--2 mb-8 max-w-md font-ui text-lg">{featured.data.description}</p>
             <a
               href={`/echoes/${featured.id}/`}
-              class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg text-foreground transition-colors duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background page-enter page-enter--3">
+              class="group ui-text page-enter page-enter--3 inline-flex items-center gap-2 border-b py-1 text-lg text-foreground transition-colors duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
               READ ECHO
-              <ArrowUpRight class="-mb-0.5 size-4 transition-transform duration-150 fine-hover:group-hover:translate-x-0.5 fine-hover:group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:fine-hover:group-hover:translate-none motion-reduce:group-focus-visible:translate-none" />
+              <ArrowUpRight class="-mb-0.5 size-4 transition-transform duration-150 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-focus-visible:translate-none fine-hover:group-hover:translate-x-0.5 fine-hover:group-hover:-translate-y-0.5 motion-reduce:fine-hover:group-hover:translate-none" />
             </a>
           </div>
-          <div
-            class="page-enter-hero h-0 min-h-full w-full [grid-area:stack] lg:[grid-area:mask]"
-            aria-hidden="true"
-          >
+          <div class="page-enter-hero h-0 min-h-full w-full [grid-area:stack] lg:[grid-area:mask]" aria-hidden="true">
             <div
               class="luminance-mask h-full min-h-full w-full bg-foreground opacity-5 lg:opacity-100"
               style={`--mask: url(${featuredMask})`}
