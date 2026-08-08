@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Hover motion only when the device can truly hover (not sticky touch taps). */
+@custom-variant fine-hover {
+  @media (hover: hover) and (pointer: fine) {
+    @slot;
+  }
+}
+
 /* * {
   outline: 1px solid rgba(255, 0, 0, 0.2);
 } */
@@ -206,7 +213,6 @@
     .hero-accent-flicker {
       animation: hero-accent-flicker 5s linear infinite;
     }
-
     @keyframes hero-accent-flicker {
       0%,
       9% {
@@ -245,8 +251,7 @@
         opacity: 1;
       }
     }
-
-    @keyframes landing-enter {
+    @keyframes page-enter {
       from {
         opacity: 0;
         transform: translateY(0.5rem);
@@ -256,8 +261,7 @@
         transform: translateY(0);
       }
     }
-
-    @keyframes landing-enter-fade {
+    @keyframes page-enter-fade {
       from {
         opacity: 0;
       }
@@ -265,8 +269,7 @@
         opacity: 1;
       }
     }
-
-    @keyframes landing-hero-enter {
+    @keyframes page-enter-hero {
       from {
         opacity: 0;
       }
@@ -274,35 +277,30 @@
         opacity: 1;
       }
     }
-
-    .landing-enter {
-      animation: landing-enter 480ms var(--ease-out-quint) both;
+    .page-enter {
+      animation: page-enter 480ms var(--ease-out-quint) both;
     }
-
-    .landing-enter-fade {
-      animation: landing-enter-fade 480ms var(--ease-out-quint) both;
+    .page-enter-fade {
+      animation: page-enter-fade 480ms var(--ease-out-quint) both;
     }
-
-    .landing-hero-enter {
-      animation: landing-hero-enter 640ms var(--ease-out-quint) 80ms both;
+    .page-enter-hero {
+      animation: page-enter-hero 640ms var(--ease-out-quint) 80ms both;
     }
-
-    .landing-enter--0 {
+    .page-enter--0 {
       animation-delay: 0ms;
     }
-    .landing-enter--1 {
+    .page-enter--1 {
       animation-delay: 60ms;
     }
-    .landing-enter--2 {
+    .page-enter--2 {
       animation-delay: 120ms;
     }
-    .landing-enter--3 {
+    .page-enter--3 {
       animation-delay: 180ms;
     }
   }
-
   @media (prefers-reduced-motion: reduce) {
-    @keyframes landing-enter-fade {
+    @keyframes page-enter-fade {
       from {
         opacity: 0;
       }
@@ -310,27 +308,24 @@
         opacity: 1;
       }
     }
-
-    .landing-enter,
-    .landing-enter-fade,
-    .landing-hero-enter {
-      animation: landing-enter-fade 200ms var(--ease-out-quint) both;
+    .page-enter,
+    .page-enter-fade,
+    .page-enter-hero {
+      animation: page-enter-fade 200ms var(--ease-out-quint) both;
     }
-
-    .landing-enter--0 {
+    .page-enter--0 {
       animation-delay: 0ms;
     }
-    .landing-enter--1 {
+    .page-enter--1 {
       animation-delay: 60ms;
     }
-    .landing-enter--2 {
+    .page-enter--2 {
       animation-delay: 120ms;
     }
-    .landing-enter--3 {
+    .page-enter--3 {
       animation-delay: 180ms;
     }
-
-    .landing-hero-enter {
+    .page-enter-hero {
       animation-delay: 80ms;
     }
   }

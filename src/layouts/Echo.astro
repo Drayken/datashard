@@ -16,12 +16,12 @@ const heroMask = (await getImage({ src: heroImage, width: 1020, format: "webp" }
   <main
     class="mx-auto prose w-full grow pt-8 pb-16 prose-datashard lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none">
     <div
-      class="luminance-mask not-prose mb-8 h-80 w-full bg-foreground"
+      class="luminance-mask not-prose mb-8 h-80 w-full bg-foreground page-enter-hero"
       style={`--mask: url(${heroMask}); --mask-size: cover`}
       aria-label="Article Cover Image">
     </div>
-    <h1>{title}</h1>
-    <small class="font-ui text-muted">
+    <h1 class="page-enter page-enter--0">{title}</h1>
+    <small class="font-ui text-muted page-enter-fade page-enter--1">
       <FormattedDate date={pubDate} />{
         updatedDate && (
           <>
@@ -31,7 +31,9 @@ const heroMask = (await getImage({ src: heroImage, width: 1020, format: "webp" }
         )
       }
     </small>
-    <hr class="my-8!" />
-    <slot />
+    <hr class="my-8! page-enter-fade page-enter--2" />
+    <div class="page-enter-fade page-enter--3">
+      <slot />
+    </div>
   </main>
 </Shell>
