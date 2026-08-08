@@ -1,15 +1,24 @@
 ---
 import { SITE_TITLE } from "@/lib/consts";
 import HeaderLink from "@/components/HeaderLink.astro";
+import MagnifyingGlass from "phosphor-astro/MagnifyingGlass.astro";
 ---
 
-<header class="px-6 font-ui uppercase lg:px-12">
+<header class="px-6 font-ui uppercase lg:px-12" data-pagefind-ignore="all">
   <nav>
     <ul
       class="flex h-18 items-center gap-8 text-foreground *:grid *:h-full *:shrink-0 *:place-items-center *:hover:text-accent *:focus-visible:text-accent">
       <a href="/" class="mr-auto pr-2 text-xl tracking-[0.3em]">{SITE_TITLE}</a>
       <HeaderLink href="/echoes" class="ui-text px-2">ECHOES</HeaderLink>
-      <button type="button" class="px-2">PF</button>
+      <button
+        type="button"
+        class="px-2"
+        data-search-open
+        aria-label="Search"
+        aria-haspopup="dialog"
+        aria-controls="site-search">
+        <MagnifyingGlass class="size-[1em]" aria-hidden="true" />
+      </button>
     </ul>
   </nav>
 </header>

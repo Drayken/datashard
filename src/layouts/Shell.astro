@@ -3,6 +3,7 @@ import type { ImageMetadata } from "astro";
 import BaseHead from "@/components/BaseHead.astro";
 // import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
+import SearchDialog from "@/components/SearchDialog.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/consts";
 
 interface Props {
@@ -26,5 +27,7 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION, image } = Astro.prop
     </div>
     <Header />
     <slot />
+    <!-- Body sibling so open search can inert the rest of the page (Base UI modal pattern). -->
+    <SearchDialog />
   </body>
 </html>

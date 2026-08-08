@@ -21,14 +21,15 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).href;
 <Shell title={title} description={description} image={heroImage}>
   <main class="w-full grow px-6 pt-8 pb-16 lg:px-12">
     <article
-      class="prose mx-auto w-full prose-datashard lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none">
+      class="prose mx-auto w-full prose-datashard lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none"
+      data-pagefind-body>
       <div
         class="luminance-mask not-prose page-enter-hero mb-8 h-80 w-full bg-foreground"
         style={`--mask: url(${heroMask}); --mask-size: cover`}
-        aria-label="Article Cover Image">
+        aria-hidden="true">
       </div>
-      <h1 class="page-enter page-enter--0">{title}</h1>
-      <small class="page-enter-fade page-enter--1 font-ui text-muted">
+      <h1 class="page-enter page-enter--0" data-pagefind-meta="title">{title}</h1>
+      <small class="page-enter-fade page-enter--1 font-ui text-muted" data-pagefind-ignore>
         <FormattedDate date={pubDate} />{
           updatedDate && (
             <>
@@ -43,7 +44,7 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).href;
         <slot />
       </div>
       <hr />
-      <div class="ui-text not-prose flex items-center gap-4 text-muted select-none *:shrink-0">
+      <div class="ui-text not-prose flex items-center gap-4 text-muted select-none *:shrink-0" data-pagefind-ignore>
         <span>Share on</span>
         <a
           href={`https://x.com/intent/post?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`}

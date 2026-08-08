@@ -8,5 +8,7 @@ node_modules/
 pnpm-debug.log*
 # environment variables
 .env*
+# cloudflare
+.wrangler/
 # macOS-specific files
 .DS_Store

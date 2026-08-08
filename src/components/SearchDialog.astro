@@ -1,0 +1,532 @@
+---
+/**
+ * Headless site search (Pagefind JS API).
+ * Behavior mirrored from Base UI Dialog + Autocomplete command palette:
+ * modal focus trap / Esc / restore focus (native <dialog>),
+ * intentional backdrop dismiss (pointerdown + pointerup on dialog, not click),
+ * inert on page siblings + document scroll lock while open,
+ * combobox + listbox with aria-activedescendant, arrow keys, Enter to activate.
+ */
+import X from "phosphor-astro/X.astro";
+---
+
+<dialog
+  id="site-search"
+  class="site-search m-0 h-dvh max-h-none w-screen max-w-none border-0 bg-transparent p-4 text-body shadow-none open:flex open:items-start open:justify-center open:pt-[min(12vh,6rem)]"
+  aria-labelledby="site-search-title"
+  inert>
+  <div
+    class="relative flex max-h-[min(32rem,calc(100dvh-4rem))] w-full max-w-xl shrink-0 flex-col overflow-hidden border border-border bg-background"
+    data-search-panel>
+    <h2 id="site-search-title" class="sr-only">Search</h2>
+    <div class="relative border-b border-border">
+      <input
+        id="site-search-input"
+        class="w-full border-0 bg-transparent py-4 pr-14 pl-4 font-body text-xl text-body outline-none placeholder:text-muted"
+        type="search"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-controls="site-search-listbox"
+        aria-expanded="false"
+        aria-label="Search Echoes"
+        data-search-input
+        autofocus
+        placeholder="Search Echoes…"
+        autocomplete="off"
+        enterkeyhint="search"
+        spellcheck="false"
+      />
+      <button
+        type="button"
+        class="absolute top-1/2 right-3 z-10 grid size-8 -translate-y-1/2 place-items-center text-muted transition-colors duration-150 hover:text-accent focus-visible:text-accent"
+        data-search-close
+        aria-label="Close search">
+        <X class="size-[1em]" aria-hidden="true" />
+      </button>
+    </div>
+    <p
+      id="site-search-status"
+      class="ui-text min-h-[1.25rem] px-4 py-2 text-xs text-muted empty:hidden"
+      role="status"
+      data-search-status>
+    </p>
+    <ul
+      id="site-search-listbox"
+      class="min-h-0 flex-1 overflow-y-auto border-t border-border empty:hidden"
+      role="listbox"
+      aria-label="Search results"
+      data-search-listbox
+      hidden>
+    </ul>
+  </div>
+</dialog>
+
+<style>
+  .site-search::backdrop {
+    background: color-mix(in oklch, var(--background) 72%, transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .site-search :global(input[type="search"]::-webkit-search-cancel-button),
+  .site-search :global(input[type="search"]::-webkit-search-decoration) {
+    appearance: none;
+  }
+
+  /* Result rows are created in JS — keep selectors :global so Astro scoping can't miss them. */
+  .site-search :global([data-search-listbox] a) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .site-search :global([data-search-listbox] li:last-child a) {
+    border-bottom: 0;
+  }
+
+  .site-search :global([data-search-listbox] [data-search-title]) {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    line-height: 1.35;
+    color: var(--foreground);
+    text-wrap: balance;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .site-search :global([data-search-listbox] [data-search-excerpt]) {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .site-search :global([data-search-listbox] mark) {
+    background: transparent;
+    color: var(--accent);
+    font: inherit;
+    padding: 0;
+  }
+
+  .site-search :global([data-search-listbox] [data-active] [data-search-title]),
+  .site-search :global([data-search-listbox] a:hover [data-search-title]),
+  .site-search :global([data-search-listbox] a:focus-visible [data-search-title]) {
+    text-decoration: underline;
+  }
+</style>
+
+<script>
+  type PagefindResultData = {
+    url: string;
+    excerpt: string;
+    plain_excerpt?: string;
+    meta: { title?: string };
+  };
+
+  type PagefindResult = {
+    id: string;
+    data: () => Promise<PagefindResultData>;
+  };
+
+  type PagefindSearchResponse = {
+    results: PagefindResult[];
+  };
+
+  type PagefindApi = {
+    init: () => Promise<void>;
+    debouncedSearch: (
+      query: string,
+      options?: Record<string, unknown>,
+      debounceMs?: number
+    ) => Promise<PagefindSearchResponse | null>;
+  };
+
+  type SearchHit = {
+    id: string;
+    url: string;
+    title: string;
+    /** Pagefind HTML excerpt; may contain `<mark>` around matches. */
+    excerpt: string;
+  };
+
+  /** Render Pagefind excerpt HTML, keeping only text + `<mark>` wrappers. */
+  function setPagefindExcerpt(el: HTMLElement, html: string): void {
+    const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
+    const root = doc.body.firstElementChild;
+    el.replaceChildren();
+    if (!root) return;
+
+    const append = (source: ParentNode): void => {
+      for (const node of source.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          el.append(document.createTextNode(node.textContent ?? ""));
+          continue;
+        }
+
+        if (!(node instanceof HTMLElement)) continue;
+
+        if (node.tagName === "MARK") {
+          const mark = document.createElement("mark");
+          mark.textContent = node.textContent ?? "";
+          el.append(mark);
+          continue;
+        }
+
+        append(node);
+      }
+    };
+
+    append(root);
+  }
+
+  const dialogEl = document.querySelector<HTMLDialogElement>("#site-search");
+  const inputEl = document.querySelector<HTMLInputElement>("[data-search-input]");
+  const listboxEl = document.querySelector<HTMLUListElement>("[data-search-listbox]");
+  const statusEl = document.querySelector<HTMLElement>("[data-search-status]");
+  const openers = document.querySelectorAll<HTMLElement>("[data-search-open]");
+  const closers = document.querySelectorAll<HTMLElement>("[data-search-close]");
+
+  if (
+    !(dialogEl instanceof HTMLDialogElement) ||
+    !(inputEl instanceof HTMLInputElement) ||
+    !(listboxEl instanceof HTMLUListElement) ||
+    !(statusEl instanceof HTMLElement)
+  ) {
+    throw new Error("Search dialog markup is missing");
+  }
+
+  const dialog = dialogEl;
+  const input = inputEl;
+  const listbox = listboxEl;
+  const status = statusEl;
+
+  let pagefind: PagefindApi | undefined;
+  let loading: Promise<PagefindApi> | undefined;
+  let hits: SearchHit[] = [];
+  let activeIndex = -1;
+  let unlockScroll: (() => void) | undefined;
+
+  function setBackgroundInert(enabled: boolean): void {
+    for (const child of document.body.children) {
+      if (!(child instanceof HTMLElement) || child === dialog) continue;
+      child.inert = enabled;
+    }
+  }
+
+  function lockPageScroll(): void {
+    unlockScroll?.();
+
+    const html = document.documentElement;
+    const body = document.body;
+    const scroller = html.scrollHeight > html.clientHeight ? html : body;
+    const previousOverflow = scroller.style.overflow;
+
+    scroller.style.overflow = "hidden";
+    unlockScroll = () => {
+      scroller.style.overflow = previousOverflow;
+      unlockScroll = undefined;
+    };
+  }
+
+  function unlockPageScroll(): void {
+    unlockScroll?.();
+  }
+
+  function setModalChrome(open: boolean): void {
+    if (open) {
+      dialog.inert = false;
+      setBackgroundInert(true);
+      lockPageScroll();
+      return;
+    }
+
+    // Clear page inert before close so native focus restore can reach the trigger.
+    setBackgroundInert(false);
+    unlockPageScroll();
+    dialog.inert = true;
+  }
+
+  async function ensurePagefind(): Promise<PagefindApi> {
+    if (pagefind) return pagefind;
+    if (!loading) {
+      loading = (async () => {
+        // Generated into dist/pagefind by `pagefind --site dist` after build.
+        const href = "/pagefind/pagefind.js";
+        const mod = (await import(/* @vite-ignore */ href)) as PagefindApi;
+        await mod.init();
+        pagefind = mod;
+        return mod;
+      })().catch((error: unknown) => {
+        loading = undefined;
+        throw error;
+      });
+    }
+    return loading;
+  }
+
+  function setStatus(message: string): void {
+    status.textContent = message;
+  }
+
+  function setExpanded(expanded: boolean): void {
+    input.setAttribute("aria-expanded", expanded ? "true" : "false");
+    listbox.hidden = !expanded;
+  }
+
+  function setActiveIndex(next: number): void {
+    const options = listbox.querySelectorAll<HTMLElement>('[role="option"]');
+    if (options.length === 0) {
+      activeIndex = -1;
+      input.removeAttribute("aria-activedescendant");
+      return;
+    }
+
+    activeIndex = ((next % options.length) + options.length) % options.length;
+
+    options.forEach((option, index) => {
+      const selected = index === activeIndex;
+      option.setAttribute("aria-selected", selected ? "true" : "false");
+      option.toggleAttribute("data-active", selected);
+    });
+
+    const active = options[activeIndex];
+    if (active) {
+      input.setAttribute("aria-activedescendant", active.id);
+      active.scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  function clearResults(): void {
+    hits = [];
+    activeIndex = -1;
+    listbox.replaceChildren();
+    input.removeAttribute("aria-activedescendant");
+    setExpanded(false);
+  }
+
+  function renderResults(nextHits: SearchHit[]): void {
+    hits = nextHits;
+    listbox.replaceChildren();
+
+    if (hits.length === 0) {
+      setExpanded(false);
+      input.removeAttribute("aria-activedescendant");
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+
+    hits.forEach((hit, index) => {
+      const option = document.createElement("li");
+      option.id = `site-search-option-${index}`;
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", "false");
+
+      const link = document.createElement("a");
+      link.href = hit.url;
+      link.tabIndex = -1;
+
+      const title = document.createElement("span");
+      title.dataset.searchTitle = "";
+      title.textContent = hit.title;
+
+      const excerpt = document.createElement("span");
+      excerpt.dataset.searchExcerpt = "";
+      setPagefindExcerpt(excerpt, hit.excerpt);
+
+      link.append(title, excerpt);
+      option.append(link);
+      fragment.append(option);
+    });
+
+    listbox.append(fragment);
+    setExpanded(true);
+    setActiveIndex(0);
+  }
+
+  async function runSearch(query: string): Promise<void> {
+    const trimmed = query.trim();
+    if (!trimmed) {
+      clearResults();
+      setStatus("");
+      return;
+    }
+
+    try {
+      const api = await ensurePagefind();
+      const response = await api.debouncedSearch(trimmed);
+      if (response === null) return;
+
+      const loaded = await Promise.all(
+        response.results.slice(0, 8).map(async (result) => {
+          const data = await result.data();
+          return {
+            id: result.id,
+            url: data.url,
+            title: data.meta.title?.trim() || data.url,
+            excerpt: data.excerpt.trim(),
+          } satisfies SearchHit;
+        })
+      );
+
+      renderResults(loaded);
+
+      if (loaded.length === 0) {
+        setStatus(`No results for “${trimmed}”`);
+      } else {
+        setStatus(`${loaded.length} result${loaded.length === 1 ? "" : "s"}`);
+      }
+    } catch (error: unknown) {
+      clearResults();
+      setStatus("Search index unavailable. Run pnpm build, then refresh.");
+      console.warn("Pagefind failed to initialize:", error);
+    }
+  }
+
+  function activateActive(): void {
+    const hit = hits[activeIndex];
+    if (!hit) return;
+    closeSearch();
+    window.location.assign(hit.url);
+  }
+
+  function focusInput(): void {
+    input.focus({ preventScroll: true });
+  }
+
+  function openSearch(): void {
+    if (!dialog.open) {
+      setModalChrome(true);
+      dialog.showModal();
+    }
+    // Native dialog honors autofocus; select() still needs a tick after open.
+    queueMicrotask(() => {
+      focusInput();
+      input.select();
+    });
+    void ensurePagefind().catch(() => {
+      setStatus("Search index unavailable. Run pnpm build, then refresh.");
+    });
+  }
+
+  function closeSearch(): void {
+    if (!dialog.open) return;
+    setModalChrome(false);
+    dialog.close();
+  }
+
+  input.addEventListener("input", () => {
+    void runSearch(input.value);
+  });
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (hits.length === 0) return;
+      setActiveIndex(activeIndex < 0 ? 0 : activeIndex + 1);
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (hits.length === 0) return;
+      setActiveIndex(activeIndex < 0 ? hits.length - 1 : activeIndex - 1);
+      return;
+    }
+
+    if (event.key === "Home") {
+      if (hits.length === 0) return;
+      event.preventDefault();
+      setActiveIndex(0);
+      return;
+    }
+
+    if (event.key === "End") {
+      if (hits.length === 0) return;
+      event.preventDefault();
+      setActiveIndex(hits.length - 1);
+      return;
+    }
+
+    if (event.key === "Enter") {
+      if (activeIndex < 0 || hits.length === 0) return;
+      event.preventDefault();
+      activateActive();
+    }
+  });
+
+  listbox.addEventListener("mousemove", (event) => {
+    const option = (event.target as HTMLElement | null)?.closest<HTMLElement>('[role="option"]');
+    if (!option || !listbox.contains(option)) return;
+    const options = [...listbox.querySelectorAll<HTMLElement>('[role="option"]')];
+    const index = options.indexOf(option);
+    if (index >= 0 && index !== activeIndex) setActiveIndex(index);
+  });
+
+  listbox.addEventListener("click", (event) => {
+    const link = (event.target as HTMLElement | null)?.closest("a");
+    if (!link || !listbox.contains(link)) return;
+    closeSearch();
+  });
+
+  openers.forEach((opener) => {
+    opener.addEventListener("click", () => {
+      openSearch();
+    });
+  });
+
+  closers.forEach((closer) => {
+    closer.addEventListener("click", () => {
+      closeSearch();
+    });
+  });
+
+  // Backdrop dismiss — Base UI Dialog `outsidePressEvent: "intentional"`:
+  // require press start + end on the backdrop so a text-select drag that
+  // releases outside doesn't close (click would otherwise target the dialog).
+  let backdropPointerDown = false;
+
+  dialog.addEventListener("pointerdown", (event) => {
+    backdropPointerDown = event.button === 0 && event.target === dialog;
+  });
+
+  dialog.addEventListener("pointerup", (event) => {
+    if (backdropPointerDown && event.button === 0 && event.target === dialog) {
+      closeSearch();
+    }
+    backdropPointerDown = false;
+  });
+
+  dialog.addEventListener("pointercancel", () => {
+    backdropPointerDown = false;
+  });
+
+  // Escape closes natively; lift inert first so focus can restore to the trigger.
+  dialog.addEventListener("cancel", () => {
+    setModalChrome(false);
+  });
+
+  dialog.addEventListener("close", () => {
+    setModalChrome(false);
+    clearResults();
+    setStatus("");
+    input.value = "";
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const key = event.key.toLowerCase();
+    if ((event.metaKey || event.ctrlKey) && key === "k") {
+      event.preventDefault();
+      if (dialog.open) closeSearch();
+      else openSearch();
+    }
+  });
+</script>
