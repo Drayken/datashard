@@ -1,0 +1,209 @@
+---
+title: "ARC Raiders Has the Foundation, but the Cracks Are Showing"
+description: "Feedback on ARC Raiders' strengths and critical areas for improvement, covering technical performance, game design, and player experience."
+pubDate: "Nov 12 2025"
+updatedDate: "Jan 15 2026"
+heroImage: "../../assets/dump/hero-arc-raiders.webp"
+---
+
+import LuminanceImage from "@/components/LuminanceImage.astro";
+
+Early tests, betas, and now the official release suggest that ARC Raiders is finally managing to pull off what other titles like The Division, The War Z/Infestation _(and its questionable clones)_, Escape from Tarkov, and Hunt: Showdown couldn't: a compelling PvPvE extraction shooter experience accessible to the mainstream audience.
+
+## What Works
+
+While this sentiment may change as the player base experiences more of the game, it's undeniable that there's been much more care in developing ARC Raiders than most live service gamers are used to in recent times. The Division _(the first and last extraction shooter I've ever enjoyed)_ succeeded in areas where Escape from Tarkov failed, and vice versa. ARC Raiders is trying to pull from both.
+
+The technical foundation is solid. Good performance is uncommon in UE5 titles, often due to heavy feature sets or suboptimal optimization choices. Embark shipped a lean, purpose-built UE5 setup, and it mostly paid off. It's quite rare for a game that looks this good to reach 200 FPS with framegen on a mid-tier PC _(RX 6600XT & Ryzen 5 3600)_ in 2025.
+
+From overall machine learning-driven behavior to impressive locomotion mechanics, the AI is a breath of fresh air compared to the usual. The only notable issues are occasional hiccups where enemies get stuck on objects and terrain. Beyond that, I'd like to see more variety _(which is already being developed)_, particularly for indoor enemies, as well as better danger scaling according to loot zones, a topic I'll address later.
+
+Nearly every weapon has a place at different gear scores and situations, which is rare. There are some offending outliers that are egregiously overpowered like the Venator, but otherwise most weapons can actually serve some purpose depending on what you're trying to accomplish at any given moment. Weapons with large upfront damage have massive advantages currently due to the third-person nature of the game _(same with grenades)_ allowing for camera peeking. This advantage snowballs when accounting for peeker's advantage. I expect extensive balance passes around guns and possibly the skill tree to make full-auto weapons more desirable in the near future, at least I hope so.
+
+However, there are areas in which it falls short, some of which are quite critical pain points that need to be addressed in the _very near future_ if the game is to continue succeeding with both casual and competitive players.
+
+## What needs work
+
+import arcRaidersRain from "../../assets/dump/arc-raiders-rain.webp";
+
+<LuminanceImage src={arcRaidersRain} alt="Queen ARC looming during a rainstorm - Embark Studios" />
+
+### Loadouts
+
+This is a quality-of-life issue that most game studios only realize becomes necessary once player fatigue sets in later in a game's lifecycle. We've seen it with games like Escape from Tarkov and Rust. There are times when my squad and I specifically go out of our way to run free loadouts simply because we're tired of having to craft our gear and set up custom loadouts. There needs to be a way for players to save a loadout, show requirements, and recursively autocraft everything needed to equip that final loadout.
+
+### Quests
+
+**Quests lack meaningful payoff**. They mostly award junk, don't lead to any substantial reward at the end of the line, and don't even grant experience upon completion. Which is strange because earlier builds of the game used to.
+
+**Quest items lack designation**. Though there are item type tags, a tracking system, rarity, etc., you're unfortunately stuck with the classic dilemma of having to guess what you should and shouldn't recycle and sell, as there's no indication as to which items you'll need for future quests, workbench upgrades, and Scrappy upgrades. The unfortunate part is that finding a solution to this is quite difficult without breaking discoverability for players, though most of the time they just end up either not caring or "spoiling" themselves through internet resources anyway.
+
+### Loot zones
+
+**There's a lack of challenge-based area locks.** As far as I've been able to experience, the only type of locking is tied to keys and terminal access. Most if not all high tier loot areas on every map are easily accessible without actually having to interact with any of the PvE guarding the surrounding areas, which is probably why the loot you find there tends to be quite underwhelming. If there's anything that needs revisiting here, it's actually forcing players to defeat a guard dog type of enemy rather than running past them.
+
+As it stands, people are pretty much just doing naked runs opening Security Lockers on preset routes in low density, low tier, low loot areas because unless you're farming Arcs, looting is almost never worth it beyond farming specific quest or upgrade threshold items. Why not move most Security Lockers to high stakes areas, and lock some behind defeating boss Arcs?
+
+### Raider spawn system
+
+This is probably one of the more egregious issues plaguing the game currently, and it's regarding the spawn system.
+
+**Spawning late in raids _(experienced up to 13 minutes late)_ despite having a full kit**: This means that most valuable areas have already been picked clean by players who have more often than not already extracted, and valuable leftovers have been scavenged into secure pockets you couldn't even access if you killed them. It also means you're at a strict disadvantage compared to anyone with a head start who spawned at the beginning of the match, as they've had time to gain advantageous positions, prep the area, and clear all Arc enemies.
+
+The clearest solution is to disable late spawns for players bringing in custom kits. If there's one thing Tarkov did right, it's the in-game PMC vs Scavenger relations and their spawn system. Late spawns should be limited to players entering with free kits. Contrary to a common counter-argument, spawning 13 minutes late is not advantageous; early squads have already extracted or secured top items in safe pockets.
+
+**There is a lack of proximity and Line of Sight checks on the spawn system.** From personal experience and actual experimentation in-game, the current iteration of the spawn system does not check for threat proximity or player Line of Sight. This means it's possible to late spawn within &lt;=20 feet of other players _(not to mention spawn spacing at the start of servers)_, and directly in their Line of Sight, dying before you even finish loading in, otherwise getting spawn camped, which is especially prevalent on Stella Montis. If you're not familiar, [here's what the experience looks like](https://www.youtube.com/watch?v=SCc10id5Sng).
+
+**Another negative design choice regarding spawns is unbalanced spawn locations.** Too many times, either others or myself have spawned directly next to or inside high-tier red zones, with much more time to clear out their _(quite frankly underwhelming)_ Arc "guards" with no outside intervention. The whole point of high-tier loot zones should be that they're highly contested, at least by more competitive players. The currently designed system doesn't achieve that.
+
+Red zones should be set apart on the map, and most squads should spawn at roughly equal distances in a radius around red zones. I've seen some argue that's a bad thing because Tarkov does this and people call it "rushing", but the difference with Tarkov is that red zones should always be PvE-riddled. Any sort of rushing would be promptly slowed down by scaling challenge resistance, increasing the likelihood of getting third-partied by other squads.
+
+### UI/UX Clarity
+
+**While you can inspect weapons to view more details**, you're still constrained to guessing numerical values for the majority of important stats unless you visit the upgrade screen as all you're getting are bar meters of relative sizes. Even then, you lose the ability to do so once a weapon is fully upgraded. Without mentioning the fact that a lot of stats are flat out wrong, especially rate of fire.
+
+**The Raider skill tree displays the same lack of UI/UX clarity**, though it's even worse, since you don't even get a filled bar to base the effects on. _"Your movement speed while crouching is increased"_; by how much total? Per point? Does it scale linearly? What about Broad Shoulders, which increases your carry weight? It's as simple as displaying `current stat -> next level stat` below the description paragraph.
+
+This design flaw even bleeds into basic items like bandages. Sure, a little bit of basic math never hurt anyone, but if we all understand that the most important medical stat players care about at a quick glance is _how much it heals total_, why are the only two explicit stats displayed heal rate per second and heal duration? You should at the very least include it in the item description instead of "a large amount of health", if not in the stat list.
+
+**The Expedition system is the exact same.** Up until very recently with communications with one of Embark's community managers, the exact details regarding the persistence of Expedition rewards was unclear. The in-game Expedition information slides consistently stated the rewards like stash space and skill points would be temporary until the next Expedition after which they would be lost. In truth, it's been said that skill points and stash space are permanent - how much of it you get is still unclear because Embark is addicted to poor UX and clarity.
+
+**The post-match report is mediocre at best.** It lacks diverse & descriptive iconography to differentiate actions, stores overlapping actions as a shortened list with "+14 more" which aren't accessible, especially if on top of each other and max zoom setting. The most obvious feature change here would be including an overlayed timeline list of events on one side of the post-match report map, when an action is hovered, its in-map badge also gets highlighted. Allow expanding the "+N more", etc.
+
+### Atmosphere & level design
+
+If there's one thing no extraction shooter has been able to replicate in the last decade, it's the perfectly executed immersion in The Division's Dark Zone. Night time, snowy NYC streets and alleys with distant shouts and sounds of conflict from within the quarantined PvP zone was the first and last time I'd ever experienced such flawless execution of mood, level design, environmental storytelling, tension, risk & reward, and much more all in one package.
+
+ARC Raiders, for now at least, is unfortunately not the game to bring this feeling back. They do have plans for things like snow, more weather events, etc., but for the most part the environment and setting itself simply doesn't make me feel anything. Every location just feels like arbitrarily placed miniature set pieces, like someone's Christmas tree village decorations.
+
+Everything feels very scaled down, like Expedition 33's transitional miniature travel map. It's the _"yeah, there would be a village here, but we won't build it out in its entirety, so you'll have to be content with three or four cramped apartment buildings as a miniature representation"_ type of thing, which made sense for E33's travel map, but not so much for the game's main content. In ARC Raiders, the levels just feel very soulless. The tutorial itself was actually quite scenic and reminiscent of The Division, but for some reason the game basically dropped the aesthetic and mood setting immediately, and otherwise can be quite bland.
+
+### Duo queue
+
+> _Post-edit (Nov. 12th, 2025): [Duo queue prioritization is now live!](https://arcraiders.com/en/news/duo-and-store-update/)_
+
+This one is clear to anyone who doesn't always have a third available. We manage somewhat fine in 2v3 situations when our third mate isn't on, but the fundamental problem is that we're much worse off against third-parties after winning said 2v3s. With a 400,000 concurrent player count on Steam alone, there's absolutely no reason why duo queues shouldn't be a thing, or at the very least, duo queue prioritization where it only slots you into 3s if it couldn't find a match in a timely manner. Alternatively, you could disable the duo queue button with an info tooltip regarding current queue times and population if it ever becomes necessary during downtimes later down the line.
+
+### Inventory management
+
+At the moment, inventory management has way too much friction despite how simple the usual convention is. For starters:
+
+- Item splitting needs an actual numerical input field with 50% being default.
+- Inventory search bar is a necessity.
+- No reason why the filter functionality should be occupying the potential search bar space, it should just be a simple dropdown button with a filter icon to the right of the a search bar.
+- Either add more stash space, or introduce specialty containers like Tarkov _(Scav Junkbox, Weapon cases, etc.)_.
+
+### Customization
+
+For a $40 game, the character customization options feel disappointingly limited, and charging an additional $20 _(half the game's full price)_ for a single outfit is difficult to justify. While the common practice of purposefully overpricing things, also known as anchoring, to create the illusion of _"listening to the community"_ when lowering them to still-unreasonable levels is unfortunately standard in the industry, it's disappointing to see from a team that has otherwise mostly demonstrated genuine care for their product.
+
+### Security Breach
+
+I've slightly touched on this earlier by suggesting to move Security Lockers into high-risk areas of the map. But for those not familiar, Security Breach is a major skill tree node in the Survival branch. It allows you to open special containers, mostly placed in random low loot areas, which used to reward you with an overpowered amount of high tier loot for virtually no effort in-raid. Embark's response was to completely destroy the value of this skill, despite being a major node, rather than making the correct choice which is:
+
+1. Remove Security Breach from the skill tree, it has no business being a node _(let alone in a "Survival Branch")_.
+2. Replace the Security Breach node with something more useful to the Survival branch.
+3. Move Security Lockers into high-risk areas of the map and make them accessible to everyone.
+4. Make use of challenge-based encounters requiring special actions to access these containers.
+
+### Cheating & Exploiting Epidemic
+
+Embark's track record with The Finals has already demonstrated a concerning pattern: they consistently struggle to address cheating and exploiting in a timely or effective manner.
+
+While delusional Redditors permanently vacationing in PvE-only lobbies _(courtesy of Aggression-Based Matchmaking)_ love to gaslight everyone into thinking cheaters don't exist, anyone actively engaged in PvP since release has witnessed an escalating cheating crisis. Blatant ragehacking, radar & ESP usage, Kettle macros, and out-of-bounds exploiters shooting through the map have become disturbingly commonplace and are present in virtually every single lobby. The scale of the problem rivals Call of Duty's worst peak cheating population, achieved in only a few months since release.
+
+The situation is exacerbated by fundamental technical failures. Embark opted for the lowest tier of Easy Anti Cheat, and the backend architecture lacks basic authoritative measures - a junior-level oversight that allows players to infinitely reconnect to raids after death via simple console commands. Despite claiming a fix, Embark only disabled the `--newconsole` launch flag on Steam - both the console and vulnerabilities are still fully accessible through other means like Epic Games and exposed client-side APIs which weren't even touched by Embark. The console itself remains exploitable alongside numerous config and ini vulnerabilities, revealing a complete absence of proper validation, encryption, and file integrity checks.
+
+What makes this particularly egregious is the lack of meaningful action:
+
+- Cheaters who do get caught _(rare)_ are only temporarily suspended for 30 days.
+- The same groups of cheaters have been targeting [the most popular ARC Raiders streamers since release](https://x.com/burntpeanutclip/status/2011822684813082852), _blatantly_ ragehacking for everyone to see - and those players have had ZERO action taken against them despite the documented behaviour and sheer attention brought to the situation.
+- Due to Embark allowing family-sharing, anyone suspended can infinitely offload their main copy of the game onto alternate accounts, and bans do not propagate to their main account.
+- Kettle rapidfire macros are a repeated issue from The Finals which they didn't learn from.
+- Maps are absolutely riddled with collisions meshes which lack fidelity, allowing players to walk through objects and exit map boundaries to then shoot players through one-sided surfaces.
+- They claimed to have fixed the console exploit while only disabling the -newconsole launch argument on Steam, it is still abusable on Epic Games - and to anyone with the technical know-how as the user-facing APIs are still exposed.
+
+### Audio
+
+While the sound design itself is solid, the audio implementation suffers from significant technical issues. Audio zone delimitations are incorrectly set up, causing spatial audio to bleed between separate areas of the map. Camera proximity to walls, ceilings, or floors can trigger audio zones from entirely different map sections.
+
+The audio obstacle processing is similarly underwhelming, implementing only basic occlusion without proper sound bouncing or origin rerouting to thresholds like doorways and windows. For reference on what proper audio propagation should look like, while not perfect, [Escape from Tarkov's implementation](https://x.com/tarkov/status/1913269691767816273) demonstrates the level of fidelity that's possible with modern systems. These fundamental issues place ARC Raiders' audio well behind its competitors in the genre, and that's before accounting for the various audio bugs currently present in the game - like infinitely looping burning & searching SFX as well as player shield initialization sounds when you load them in proximity for the first time, giving up their position.
+
+### Bug-Fixing Workflow
+
+Honestly don't want to spend too much time on this section since the rest of the article renders it pretty self-explanatory, but Embark needs to get up to speed when it comes to addressing issues in a timely manner and _actually addressing them correctly_.
+
+For example; There is a room in Stella Montis' lobby where you can get locked in by other players. The developers thought the culprit was an interactable crate occluding the button which prevented opening the door from within the room, however:
+
+- The actual issue is that there was no interaction on the button to begin with.
+- They moved the box across the room without rotating it, so its interaction is on the wrong side.
+- Neither of these were caught at the time of pushing their attempted fix because they didn't test any of it.
+
+While not that big of a deal, it shows how Embark mostly has absolutely no clue what they're doing at any given time and anything they put out short of a microtransaction sees no live testing/QA whatsoever which would easily catch these kinds of issues and failed fixes within a matter of seconds.
+
+### Other
+
+- Absurd amounts of incorrect or missing collisions on terrain and structures _(including literal holes in Stella Montis doorways)_.
+- Fire damage and other hazards like ARC stomp damage passing through structures, rocks, etc.
+- Accidental zipline in the ceiling on Stella Montis allowing players to clip through the map and shoot everyone through walls going unfixed for over 2 weeks.
+- Game-breaking exploits are not being acknowledged let alone fixed.
+- The Venator still only consumes one bullet after firing, despite the description _(and gun model)_ suggesting it should consume two per shot.
+
+## Recap & Proposed Fixes
+
+- Introduce custom loadout presets with auto-craft and resource cost preview, prompt with missing parts.
+- Add quest completion XP and more interesting end-chain rewards.
+- Gate highest tiered rewards behind challenging and interesting encounters.
+- Move Security Lockers into high-risk zones.
+- Scale PvE density and threat by area tier.
+- Only enable late spawns for free loadouts.
+- Add a cooldown between late spawns with a depletable lobby maximum.
+- Make late spawn positions fluid and randomized similarly to Tarkov.
+- Add proximity and Line of Sight checks to the spawn system.
+- Spawn players at roughly equal distances around high tier loot areas.
+- Ensure proper resistance from PvE scaling with area tier, slowing down rushers, increasing likelihood of third-party contests.
+- Display numerical values for all important stats like damage, rate of fire, etc., in the UI.
+- Display current stat → next level stat for each node where relevant in the Raider skill tree.
+- Add an overlayed chronological list of events on one side of the post-match report map.
+- Allow expanding the "+N more" when selecting numerized action groups.
+- Improve selection of specific events in tightly grouped action packs.
+- Do a full pass from UI/UX experts as well as usability testing and research with your userbase, streamers, etc.
+- Build larger connected landmarks and persistent soundscape layers.
+- Weather should affect stealth/visibility and PvE behavior.
+- Do a Night-mode lighting pass inspired by The Division's Dark Zone; crunch contrast, implement anti-gamma exploits using grain overlays like in Rust to retain competitive integrity while still being able to do real darkness.
+- Use the game's existing tutorial as reference for how to properly set the mood and atmosphere of the game.
+- Add a dedicated duo queue with fallback to trio lobbies in exceptional cases
+- Show a tooltip when disabled during off-peak to explain queue behavior.
+- Either disable family sharing, or bubble up account suspensions to all related accounts.
+- Item splitting needs an actual numerical input field with 50% being default.
+- Use the large filter button as a search bar input instead.
+- Move filter functionality to a dropdown button with a filter icon to the right of the search bar.
+- Either add more stash space, or introduce specialty containers like Tarkov (Scav Junkbox, Weapon cases, etc.)
+- Add more character customization options.
+- Greatly reduce the price of outfits, there's no reason for them to cost half the game's full price.
+- Stop pretending like your anchoring methods is "listening to the community" when lowering them to still-unreasonable levels.
+- Remove Security Breach from the skill tree, make them accessible to everyone in high-risk areas.
+- The Venator should consume two bullets per shot, as stated by both its 3D model and description.
+- Set a rate of fire cap on the Kettle to avoid rapid-fire macros.
+- Permanently ban anyone utilizing cheating software.
+- 14-day suspensions for anyone found exploiting on first offense, permanent for repeated offenses.
+- Either disable family sharing, or bubble up account suspensions to all related accounts
+- Use something better than the lowest tier of Easy Anti Cheat.
+- Get a better grip on the state of the game, how do groups of cheaters go unimpeded while exposed by top streamers for months at a time?
+- Map holes is a fundamental flaw in your workflow, it should not be this prevalent. A simple cross-map collision pass will not be enough for this. You need total revision of how you're handling your collision generation & fidelity from the ground up.
+- Implement modern audio system design, better occlusion & audio volumes, bouncing, threshold sources etc.
+- This is a hard conversation for most, but many Engineers at Embark need re-education or flat out firing when proving to do worse work than that of a junior when it comes to critical systems. The lack of authoritative measures on the server is a gigantic red flag. Players should not be able to infinitely reconnect to raids they've died in with a console command or simple server request. There's very basic checks you can do against this sort of thing that should've been first-priority even for beginners.
+
+---
+
+## Conclusion
+
+import arcRaidersMeteorShower from "../../assets/dump/arc-raiders-meteor-shower.webp";
+
+<LuminanceImage src={arcRaidersMeteorShower} alt="Raider looting under a starry night meteor shower - Embark Studios" />
+
+ARC Raiders shows _(and partly delivers)_ genuine promise as an extraction shooter that could bridge the gap between hardcore and mainstream audiences. The technical foundation is solid, with impressive performance and AI that sets a new standard for the genre. The gunplay, while needing balance passes, demonstrates thoughtful design where most weapons have their place.
+
+However, the game's continued success will ultimately depend on addressing the critical pain points outlined above, particularly the cheating epidemic, engineering talent flaws at Embark, the spawn system, quest design, ARC variety, and loot zone mechanics. With the player count and community engagement ARC Raiders currently enjoys, there's a real opportunity to refine these systems before player fatigue sets in.
+
+Games like The Division set a high bar for atmosphere and immersion that ARC Raiders hasn't yet captured, but with planned weather systems, environmental updates, and new maps, there's still hope. For now, it's a solid foundation that needs polish in the right places to become the extraction shooter that finally gets it right.
