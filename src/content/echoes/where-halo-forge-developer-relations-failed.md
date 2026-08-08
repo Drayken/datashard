@@ -3,7 +3,7 @@ title: "Where Halo Forge Developer Relations Failed"
 description: "How 343 Industries failed Halo Infinite's Forge community through exploitative practices, unaddressed bugs, and missing features. Why creators abandoned Halo for better UGC platforms."
 pubDate: "Sep 1 2025"
 updatedDate: "Nov 15 2025"
-heroImage: "../../assets/dump/halo.webp"
+heroImage: "../../assets/dump/hero-halo.webp"
 ---
 
 From personal experience, to hearing from those within the Forge community and news regarding some of the most talented Forgers abandoning Halo, [like The Forge Falcons](https://x.com/TheForgeFalcons/status/1935760269189288146), I decided to write out some of my own thoughts on how things have been handled by the studio behind Halo Infinite.
