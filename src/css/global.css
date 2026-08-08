@@ -1,13 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* Hover motion only when the device can truly hover (not sticky touch taps). */
-@custom-variant fine-hover {
-  @media (hover: hover) and (pointer: fine) {
-    @slot;
-  }
-}
-
 /* * {
   outline: 1px solid rgba(255, 0, 0, 0.2);
 } */
