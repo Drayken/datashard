@@ -8,6 +8,8 @@
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "prettier.prettierPath": "./node_modules/prettier",
+  "prettier.configPath": "./prettier.config.mjs",
   "eslint.validate": ["javascript", "typescript", "astro"],
   "files.associations": {
     "*.css": "tailwindcss"
