@@ -25,8 +25,8 @@ const restMasks = await Promise.all(
     <h1 class="sr-only">Latest Echoes</h1>
     {
       featured && (
-        <section class="grid grid-cols-2">
-          <div>
+        <section class="grid gap-8 [grid-template-areas:'stack'] lg:grid-cols-2 lg:[grid-template-areas:'content_mask']">
+          <div class="z-1 [grid-area:stack] lg:[grid-area:content]">
             <span class="font-ui text-muted">
               <FormattedDate date={featured.data.pubDate} />
               {featured.data.updatedDate && (
@@ -36,7 +36,9 @@ const restMasks = await Promise.all(
                 </>
               )}
             </span>
-            <h2 class="mb-8 max-w-3xl font-heading text-7xl leading-tight">{featured.data.title}</h2>
+            <h2 class="mb-8 max-w-3xl font-heading text-[clamp(2rem,5vw,4.5rem)] leading-tight">
+              {featured.data.title}
+            </h2>
             <p class="mb-16 max-w-md font-ui text-lg">{featured.data.description}</p>
             <a
               href={`/echoes/${featured.id}/`}
@@ -46,7 +48,7 @@ const restMasks = await Promise.all(
             </a>
           </div>
           <div
-            class="luminance-mask h-0 min-h-full w-full bg-foreground"
+            class="luminance-mask h-0 min-h-full w-full bg-foreground opacity-5 [grid-area:stack] lg:opacity-100 lg:[grid-area:mask]"
             style={`--mask: url(${featuredMask})`}
             aria-hidden="true"
           />
@@ -58,10 +60,10 @@ const restMasks = await Promise.all(
       <ul class="border-y">
         {
           restMasks.map(({ echo, mask }) => (
-            <li class="relative grid grid-cols-[auto_1fr] gap-8 not-last:border-b">
+            <li class="relative grid grid-cols-[8rem_1fr] gap-8 not-last:border-b">
               <div
-                class="luminance-mask aspect-square h-0 min-h-full w-auto bg-foreground"
-                style={`--mask: url(${mask}); --mask-size: contain`}
+                class="luminance-mask h-full min-h-full w-full bg-foreground"
+                style={`--mask: url(${mask}); --mask-size: cover; --mask-position: center`}
                 aria-hidden="true"
               />
               <div class="py-8">
