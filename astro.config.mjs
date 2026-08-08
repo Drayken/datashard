@@ -8,8 +8,9 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "http://localhost:4321",
+  trailingSlash: "ignore",
+  prefetch: true,
   integrations: [mdx(), sitemap()],
-
   markdown: {
     processor: unified({
       rehypePlugins: [
@@ -23,8 +24,6 @@ export default defineConfig({
       ],
     }),
   },
-
-
   fonts: [
     {
       provider: fontProviders.local(),
@@ -87,7 +86,6 @@ export default defineConfig({
       },
     },
   ],
-
   vite: {
     plugins: [tailwindcss()],
   },
