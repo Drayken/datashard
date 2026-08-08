@@ -10,13 +10,13 @@ const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
 <Shell>
   <main class="relative flex grow flex-col justify-center px-6 py-16 lg:px-12">
     <div class="z-1">
-      <h1 class="mb-8 max-w-4xl font-heading text-[clamp(2rem,5vw,5rem)] leading-tight">
+      <h1 class="mb-8 max-w-4xl font-heading text-[clamp(2rem,5vw,5rem)] leading-tight landing-enter landing-enter--0">
         Fragments of the Digital Frontier
       </h1>
-      <p class="mb-16 max-w-md font-ui text-lg text-muted">Archive by @KGDrayken</p>
+      <p class="mb-16 max-w-md font-ui text-lg text-muted landing-enter landing-enter--1">Archive by @KGDrayken</p>
       <a
         href={latestHref}
-        class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg text-foreground transition-all duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
+        class="group ui-text inline-flex items-center gap-2 border-b py-1 text-lg text-foreground transition-all duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background landing-enter landing-enter--2">
         READ LATEST ECHO
         <ArrowUpRight
           class="-mb-0.5 size-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-none motion-reduce:group-focus-visible:translate-none"
@@ -25,13 +25,15 @@ const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
     </div>
 
     <!-- HERO ART -->
-    <div class="hero-mask hero-mask-base pointer-events-none absolute inset-0 bg-foreground" aria-hidden="true"></div>
-    <div class="hero-accent-flicker pointer-events-none absolute inset-0" aria-hidden="true">
-      <div class="hero-mask hero-mask-accent absolute inset-0 bg-accent"></div>
+    <div class="landing-hero-enter pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="hero-mask hero-mask-base absolute inset-0 bg-foreground"></div>
+      <div class="hero-accent-flicker absolute inset-0">
+        <div class="hero-mask hero-mask-accent absolute inset-0 bg-accent"></div>
+      </div>
     </div>
     <div
       aria-hidden="true"
-      class="corner-border ui-text pointer-events-none absolute top-[30%] right-8 w-fit -translate-y-1/2 px-4 py-3 select-none">
+      class="corner-border ui-text pointer-events-none absolute top-[30%] right-8 w-fit -translate-y-1/2 px-4 py-3 select-none landing-enter-fade landing-enter--3">
       ORDER<br /> IS A MOMENT.<br /> ENTROPY<br /> IS THE STORY.
     </div>
   </main>

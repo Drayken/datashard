@@ -245,5 +245,93 @@
         opacity: 1;
       }
     }
+
+    @keyframes landing-enter {
+      from {
+        opacity: 0;
+        transform: translateY(0.5rem);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes landing-enter-fade {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes landing-hero-enter {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .landing-enter {
+      animation: landing-enter 480ms var(--ease-out-quint) both;
+    }
+
+    .landing-enter-fade {
+      animation: landing-enter-fade 480ms var(--ease-out-quint) both;
+    }
+
+    .landing-hero-enter {
+      animation: landing-hero-enter 640ms var(--ease-out-quint) 80ms both;
+    }
+
+    .landing-enter--0 {
+      animation-delay: 0ms;
+    }
+    .landing-enter--1 {
+      animation-delay: 60ms;
+    }
+    .landing-enter--2 {
+      animation-delay: 120ms;
+    }
+    .landing-enter--3 {
+      animation-delay: 180ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    @keyframes landing-enter-fade {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .landing-enter,
+    .landing-enter-fade,
+    .landing-hero-enter {
+      animation: landing-enter-fade 200ms var(--ease-out-quint) both;
+    }
+
+    .landing-enter--0 {
+      animation-delay: 0ms;
+    }
+    .landing-enter--1 {
+      animation-delay: 60ms;
+    }
+    .landing-enter--2 {
+      animation-delay: 120ms;
+    }
+    .landing-enter--3 {
+      animation-delay: 180ms;
+    }
+
+    .landing-hero-enter {
+      animation-delay: 80ms;
+    }
   }
 }
