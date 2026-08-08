@@ -48,7 +48,7 @@ const restMasks = await Promise.all(
           <div
             class="luminance-mask h-0 min-h-full w-full bg-foreground"
             style={`--mask: url(${featuredMask})`}
-            aria-hidden
+            aria-hidden="true"
           />
         </section>
       )
@@ -62,7 +62,7 @@ const restMasks = await Promise.all(
               <div
                 class="luminance-mask aspect-square h-0 min-h-full w-auto bg-foreground"
                 style={`--mask: url(${mask}); --mask-size: contain`}
-                aria-hidden
+                aria-hidden="true"
               />
               <div class="py-8">
                 <h3 class="mb-2">
@@ -83,7 +83,7 @@ const restMasks = await Promise.all(
               <div
                 class="luminance-mask pointer-events-none absolute inset-0 bg-foreground opacity-5"
                 style={`--mask: url(${mask}); --mask-size: cover`}
-                aria-hidden
+                aria-hidden="true"
               />
             </li>
           ))

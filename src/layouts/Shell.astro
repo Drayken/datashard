@@ -22,7 +22,7 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION, image } = Astro.prop
   <body class="flex flex-col">
     <div
       class="pointer-events-none fixed inset-0 z-100 size-full bg-[url('/noise.webp')] bg-repeat opacity-[0.075] select-none"
-      aria-hidden>
+      aria-hidden="true">
     </div>
     <Header />
     <slot />
