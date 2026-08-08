@@ -258,7 +258,7 @@ import X from "phosphor-astro/X.astro";
     if (pagefind) return pagefind;
     if (!loading) {
       loading = (async () => {
-        // Generated into dist/pagefind by `pagefind --site dist` after build.
+        // Written to dist/pagefind by the pagefind Astro integration on build.
         const href = "/pagefind/pagefind.js";
         const mod = (await import(/* @vite-ignore */ href)) as PagefindApi;
         await mod.init();
@@ -386,7 +386,11 @@ import X from "phosphor-astro/X.astro";
       }
     } catch (error: unknown) {
       clearResults();
-      setStatus("Search index unavailable. Run pnpm build, then refresh.");
+      setStatus(
+        import.meta.env.DEV
+          ? "Search index unavailable. Run a production build once, then refresh."
+          : "Search is temporarily unavailable."
+      );
       console.warn("Pagefind failed to initialize:", error);
     }
   }
@@ -413,7 +417,11 @@ import X from "phosphor-astro/X.astro";
       input.select();
     });
     void ensurePagefind().catch(() => {
-      setStatus("Search index unavailable. Run pnpm build, then refresh.");
+      setStatus(
+        import.meta.env.DEV
+          ? "Search index unavailable. Run a production build once, then refresh."
+          : "Search is temporarily unavailable."
+      );
     });
   }
 

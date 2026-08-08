@@ -4,14 +4,14 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig, fontProviders } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import tailwindcss from "@tailwindcss/vite";
-import pagefindDev from "./src/integrations/pagefind-dev.mjs";
+import pagefind from "./src/integrations/pagefind.mjs";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://datashard.zxsn.workers.dev",
   trailingSlash: "ignore",
   prefetch: true,
-  integrations: [mdx(), sitemap(), pagefindDev()],
+  integrations: [mdx(), sitemap(), pagefind()],
   markdown: {
     processor: unified({
       rehypePlugins: [

@@ -32,6 +32,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      pagefind:
+        specifier: ^1.5.2
+        version: 1.5.2
       phosphor-astro:
         specifier: ^2.1.0
         version: 2.1.0
@@ -75,9 +78,6 @@ importers:
       globals:
         specifier: ^17.9.0
         version: 17.9.0
-      pagefind:
-        specifier: ^1.5.2
-        version: 1.5.2
       prettier:
         specifier: ^3.9.6
         version: 3.9.6
