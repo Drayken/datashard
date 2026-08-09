@@ -8,7 +8,7 @@ import pagefind from "./src/integrations/pagefind.mjs";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://datashard.zxsn.workers.dev",
+  site: "https://zxsn.sh",
   trailingSlash: "ignore",
   prefetch: true,
   integrations: [mdx(), sitemap(), pagefind()],

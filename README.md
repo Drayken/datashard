@@ -1,6 +1,6 @@
-# Datashard
+# ZXSN - zxsn.sh
 
-Archive of echoes running on the "Editorial Entropy" template by @KGDrayken.
+Astro "Editorial Entropy" Blog by @KGDrayken.
 
 ## TASKS
 
