@@ -1,5 +1,5 @@
 {
-  "name": "ZXSN",
+  "name": "zxsn",
   "compatibility_date": "2026-08-08", // Update to the day you deploy
   "assets": {
     "directory": "./dist",
