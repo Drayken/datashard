@@ -12,7 +12,7 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
   data-toc
   data-toc-content-selector={contentSelector}
   class="sticky top-12 self-start text-muted [&_a]:hover:text-foreground [&_a]:focus-visible:text-foreground">
-  <ol data-toc-list></ol>
+  <ol data-toc-list class="[&_ol]:pl-4"></ol>
 </nav>
 
 <div data-toc-debug aria-hidden="true">
