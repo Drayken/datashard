@@ -7,5 +7,5 @@ Astro "Editorial Entropy" Blog by @KGDrayken.
 - [ ] Build an image pipeline for consistent aesthetic processing & masking
   - [ ] Swap from luminance masks to alpha masks
 - [ ] 404 page
-- [ ] Table of Contents
 - [ ] Anchor copy
+- [ ] Scroll to top button?
