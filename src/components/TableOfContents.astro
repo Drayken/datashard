@@ -11,14 +11,9 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
   aria-label="On this page"
   data-toc
   data-toc-content-selector={contentSelector}
-  class="sticky top-12 self-start text-sm leading-tight text-muted [&_a]:block [&_a]:border-l-2 [&_a]:border-transparent [&_a]:py-1 [&_a]:hover:text-foreground [&_a]:focus-visible:text-foreground">
+  class="sticky top-12 hidden self-start text-sm leading-tight text-muted xl:block [&_a]:block [&_a]:border-l-2 [&_a]:border-transparent [&_a]:py-1 [&_a]:hover:text-foreground [&_a]:focus-visible:text-foreground">
   <ol data-toc-list class="[&_a]:pl-4 [&_ol]:pl-4"></ol>
 </nav>
-
-<div data-toc-debug aria-hidden="true">
-  <div data-toc-debug-line="top">ToC focus starts</div>
-  <div data-toc-debug-line="bottom">ToC focus ends</div>
-</div>
 
 <script>
   // Tune the active reading band without touching the range-detection logic.
@@ -53,13 +48,6 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
     const list = nav.querySelector<HTMLOListElement>("[data-toc-list]");
     if (!content || !list) return;
     const contentBody = content.querySelector<HTMLElement>("[data-toc-body]") ?? content;
-    const debug = nav.parentElement?.querySelector<HTMLElement>("[data-toc-debug]");
-    debug
-      ?.querySelector<HTMLElement>('[data-toc-debug-line="top"]')
-      ?.style.setProperty("top", `${FOCUS_OFFSET_TOP_PX}px`);
-    debug
-      ?.querySelector<HTMLElement>('[data-toc-debug-line="bottom"]')
-      ?.style.setProperty("bottom", `${FOCUS_OFFSET_BOTTOM_PX}px`);
 
     // Astro gives Markdown/MDX headings stable, unique IDs at build time. Raw
     // HTML without an ID is intentionally excluded instead of being rewritten.
@@ -169,17 +157,3 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
 
   document.querySelectorAll<HTMLElement>("[data-toc]").forEach(initialiseToc);
 </script>
-
-<style>
-  [data-toc-debug-line] {
-    position: fixed;
-    z-index: 200;
-    right: 0;
-    left: 0;
-    height: 1px;
-    background: hotpink;
-    color: hotpink;
-    font: 10px/1 monospace;
-    pointer-events: none;
-  }
-</style>

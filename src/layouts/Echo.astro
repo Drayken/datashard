@@ -20,8 +20,9 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <Shell title={title} description={description} image={heroImage}>
-  <main class="grid w-full grow grid-cols-[minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] gap-8 px-6 pt-8 pb-16 lg:px-12">
-    <div class="gutter-fill"></div>
+  <main
+    class="grid w-full grow gap-8 px-6 pt-8 pb-16 lg:px-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)]">
+    <div class="hidden xl:block" aria-hidden="true"></div>
     <article
       class="mx-auto prose w-full prose-zxsn lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none"
       data-pagefind-body
