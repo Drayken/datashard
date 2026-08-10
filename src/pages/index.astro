@@ -13,7 +13,7 @@ const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
       <h1
         class="page-enter page-enter--0 mb-8 flex max-w-4xl flex-col items-center font-heading text-[clamp(2rem,5vw,5rem)] leading-tight lg:items-start">
         <span class="bg-background">Fragments</span>
-        <span class="bg-background text-[clamp(1rem,4vw,3rem)] text-muted">of the</span>
+        <span class="bg-background text-[clamp(1rem,4vw,3rem)] font-normal text-muted lg:font-light">of the</span>
         <span class="bg-background text-accent">Digital Frontier</span>
       </h1>
       <p class="page-enter page-enter--1 mb-16 max-w-md bg-background font-ui text-base text-muted lg:text-lg">
@@ -38,8 +38,10 @@ const latestHref = latest ? `/echoes/${latest.id}/` : "/echoes/";
     </div>
     <div
       aria-hidden="true"
-      class="corner-border ui-text page-enter-fade page-enter--3 pointer-events-none absolute top-[30%] right-8 w-fit -translate-y-1/2 px-4 py-3 opacity-30 select-none">
-      ORDER<br /> IS A MOMENT.<br /> ENTROPY<br /> IS THE STORY.
+      class="page-enter-hero pointer-events-none absolute top-[30%] right-8 w-fit -translate-y-1/2">
+      <div class="corner-border ui-text px-4 py-3 opacity-30 select-none">
+        ORDER<br /> IS A MOMENT.<br /> ENTROPY<br /> IS THE STORY.
+      </div>
     </div>
   </main>
 </Shell>
