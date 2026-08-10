@@ -2,8 +2,10 @@
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import { SITE_TITLE } from "@/lib/consts";
+import NotFoundMask from "@/assets/404.webp";
+import { getImage } from "astro:assets";
 
-// TASK: Do this
+const notfoundMask = (await getImage({ src: NotFoundMask, width: 1020, format: "webp" })).src;
 ---
 
 <!doctype html>
@@ -13,10 +15,22 @@ import { SITE_TITLE } from "@/lib/consts";
   </head>
   <body>
     <Header />
-    <main>
-      <h1>404</h1>
-      <p>Page Not Found</p>
-      <a href="/">Return Home</a>
+    <main class="relative flex min-h-dvh flex-col items-center justify-center text-center">
+      <div class="pointer-events-none absolute inset-0 opacity-5">
+        <div
+          class="luminance-mask page-enter-hero absolute inset-0 bg-foreground"
+          style={`--mask: url(${notfoundMask})`}>
+        </div>
+      </div>
+      <h1
+        class="page-enter page-enter--0 mb-8 flex max-w-4xl flex-col items-center font-heading text-[clamp(2rem,5vw,5rem)] leading-tight text-accent">
+        YOU DIED
+      </h1>
+      <a
+        href="/"
+        class="group ui-text page-enter page-enter--2 py-1 text-lg text-foreground transition-colors duration-150 hover:border-transparent hover:bg-accent hover:text-background focus-visible:border-transparent focus-visible:bg-accent focus-visible:text-background">
+        not funny didn't laugh
+      </a>
     </main>
   </body>
 </html>
