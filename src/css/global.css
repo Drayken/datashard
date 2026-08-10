@@ -122,14 +122,6 @@
   .hero-accent-flicker {
     filter: drop-shadow(0 0 0.75rem color-mix(in oklch, var(--accent) 40%, transparent));
   }
-  .notfound-mask {
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-  }
 }
 
 @utility prose-zxsn {
