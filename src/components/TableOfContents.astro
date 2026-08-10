@@ -20,6 +20,9 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
   const FOCUS_OFFSET_TOP_PX = 256;
   const FOCUS_OFFSET_BOTTOM_PX = 128;
 
+  // Keep in sync with Tailwind's `xl` breakpoint (the one that un-hides the nav).
+  const ACTIVE_BREAKPOINT_QUERY = "(min-width: 80rem)";
+
   type Heading = HTMLHeadingElement;
 
   interface TocItem {
@@ -110,7 +113,12 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
         const active = activeIds.has(id);
         item.link.toggleAttribute("data-toc-active", active);
         item.heading.toggleAttribute("data-toc-active", active);
-        item.link.toggleAttribute("aria-current", active);
+
+        if (active) {
+          item.link.setAttribute("aria-current", "true");
+        } else {
+          item.link.removeAttribute("aria-current");
+        }
       }
 
       appliedIds = activeIds;
@@ -147,12 +155,43 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
       });
     }
 
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate, { passive: true });
-
+    // Attach/detach the listeners as the breakpoint is crossed instead of
+    // unconditionally running them all the time.
+    const breakpoint = window.matchMedia(ACTIVE_BREAKPOINT_QUERY);
     const resizeObserver = new ResizeObserver(scheduleUpdate);
-    resizeObserver.observe(contentBody);
-    scheduleUpdate();
+    let tracking = false;
+
+    function startTracking(): void {
+      if (tracking) return;
+      tracking = true;
+      window.addEventListener("scroll", scheduleUpdate, { passive: true });
+      window.addEventListener("resize", scheduleUpdate, { passive: true });
+      resizeObserver.observe(contentBody);
+      scheduleUpdate();
+    }
+
+    function stopTracking(): void {
+      if (!tracking) return;
+      tracking = false;
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      resizeObserver.disconnect();
+      if (animationFrame !== undefined) {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = undefined;
+      }
+    }
+
+    function syncTracking(query: MediaQueryList | MediaQueryListEvent): void {
+      if (query.matches) {
+        startTracking();
+      } else {
+        stopTracking();
+      }
+    }
+
+    syncTracking(breakpoint);
+    breakpoint.addEventListener("change", syncTracking);
   }
 
   document.querySelectorAll<HTMLElement>("[data-toc]").forEach(initialiseToc);
