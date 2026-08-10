@@ -53,7 +53,7 @@
     color: var(--background);
   }
   html {
-    @apply bg-background font-body font-medium text-body;
+    @apply bg-background font-body text-body;
     @media (prefers-reduced-motion: no-preference) {
       scroll-behavior: smooth;
     }
