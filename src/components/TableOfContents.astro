@@ -16,9 +16,8 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
 </nav>
 
 <script>
-  // Tune the active reading band without touching the range-detection logic.
   const FOCUS_OFFSET_TOP_PX = 256;
-  const FOCUS_OFFSET_BOTTOM_PX = 128;
+  const FOCUS_OFFSET_BOTTOM_PX = 256;
 
   // Keep in sync with Tailwind's `xl` breakpoint (the one that un-hides the nav).
   const ACTIVE_BREAKPOINT_QUERY = "(min-width: 80rem)";
