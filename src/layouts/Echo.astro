@@ -3,6 +3,7 @@ import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
 import Shell from "@/layouts/Shell.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
 
 import XLogo from "phosphor-astro/XLogo.astro";
 import RedditLogo from "phosphor-astro/RedditLogo.astro";
@@ -19,10 +20,12 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <Shell title={title} description={description} image={heroImage}>
-  <main class="w-full grow px-6 pt-8 pb-16 lg:px-12">
+  <main class="grid w-full grow grid-cols-[minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] gap-8 px-6 pt-8 pb-16 lg:px-12">
+    <div class="gutter-fill"></div>
     <article
-      class="prose mx-auto w-full prose-zxsn lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none"
-      data-pagefind-body>
+      class="mx-auto prose w-full prose-zxsn lg:prose-lg prose-headings:font-normal prose-h1:mb-1 prose-pre:rounded-none"
+      data-pagefind-body
+      data-toc-content>
       <div
         class="luminance-mask not-prose page-enter-hero mb-8 h-80 w-full bg-foreground"
         style={`--mask: url(${heroMask}); --mask-size: cover`}
@@ -40,7 +43,7 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).href;
         }
       </small>
       <hr class="page-enter-fade page-enter--2 my-8!" />
-      <div class="page-enter-fade page-enter--3">
+      <div class="page-enter-fade page-enter--3" data-toc-body>
         <slot />
       </div>
       <hr />
@@ -75,13 +78,16 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).href;
           data-share-copy
           data-share-url={shareUrl}>
           <LinkSimple class="size-full" aria-hidden="true" />
-          <span class="share-copy-label ui-text pointer-events-none absolute bottom-full left-1/2 mb-1 text-xs text-accent" aria-hidden="true">
+          <span
+            class="share-copy-label ui-text pointer-events-none absolute bottom-full left-1/2 mb-1 text-xs text-accent"
+            aria-hidden="true">
             Copied
           </span>
         </button>
         <span class="sr-only" aria-live="polite" data-share-copy-status></span>
       </div>
     </article>
+    <TableOfContents />
   </main>
 </Shell>
 

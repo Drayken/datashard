@@ -58,6 +58,7 @@
   }
   html {
     @apply bg-background font-body text-body;
+    scroll-padding-top: 5rem;
     @media (prefers-reduced-motion: no-preference) {
       scroll-behavior: smooth;
     }

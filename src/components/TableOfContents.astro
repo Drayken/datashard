@@ -1,0 +1,185 @@
+---
+interface Props {
+  /** Selector for the article whose H2/H3 headings should be indexed. */
+  contentSelector?: string;
+}
+
+const { contentSelector = "[data-toc-content]" } = Astro.props;
+---
+
+<nav
+  aria-label="On this page"
+  data-toc
+  data-toc-content-selector={contentSelector}
+  class="sticky top-12 self-start text-muted [&_a]:hover:text-foreground [&_a]:focus-visible:text-foreground">
+  <ol data-toc-list></ol>
+</nav>
+
+<div data-toc-debug aria-hidden="true">
+  <div data-toc-debug-line="top">ToC focus starts</div>
+  <div data-toc-debug-line="bottom">ToC focus ends</div>
+</div>
+
+<script>
+  // Tune the active reading band without touching the range-detection logic.
+  const FOCUS_OFFSET_TOP_PX = 256;
+  const FOCUS_OFFSET_BOTTOM_PX = 128;
+
+  type Heading = HTMLHeadingElement;
+
+  interface TocItem {
+    heading: Heading;
+    level: 2 | 3;
+    parentId?: string | undefined;
+    nextBoundary?: Heading | undefined;
+    link: HTMLAnchorElement;
+  }
+
+  function createLink(item: Omit<TocItem, "link">): HTMLAnchorElement {
+    const link = document.createElement("a");
+    link.href = `#${item.heading.id}`;
+    link.textContent = item.heading.textContent?.trim() || item.heading.id;
+    link.className = "data-[toc-active]:text-red-500";
+    link.dataset.tocLink = item.heading.id;
+    link.dataset.tocLevel = String(item.level);
+    return link;
+  }
+
+  function initialiseToc(nav: HTMLElement): void {
+    const contentSelector = nav.dataset.tocContentSelector;
+    if (!contentSelector) return;
+
+    const content = document.querySelector<HTMLElement>(contentSelector);
+    const list = nav.querySelector<HTMLOListElement>("[data-toc-list]");
+    if (!content || !list) return;
+    const contentBody = content.querySelector<HTMLElement>("[data-toc-body]") ?? content;
+    const debug = nav.parentElement?.querySelector<HTMLElement>("[data-toc-debug]");
+    debug
+      ?.querySelector<HTMLElement>('[data-toc-debug-line="top"]')
+      ?.style.setProperty("top", `${FOCUS_OFFSET_TOP_PX}px`);
+    debug
+      ?.querySelector<HTMLElement>('[data-toc-debug-line="bottom"]')
+      ?.style.setProperty("bottom", `${FOCUS_OFFSET_BOTTOM_PX}px`);
+
+    // Astro gives Markdown/MDX headings stable, unique IDs at build time. Raw
+    // HTML without an ID is intentionally excluded instead of being rewritten.
+    const headings = Array.from(content.querySelectorAll<Heading>("h2, h3")).filter(({ id }) => id);
+    if (headings.length === 0) {
+      nav.hidden = true;
+      return;
+    }
+
+    const items: TocItem[] = [];
+    let currentH2: TocItem | undefined;
+    let currentH2List: HTMLOListElement | undefined;
+
+    for (const heading of headings) {
+      const level = Number(heading.tagName.slice(1)) as 2 | 3;
+      const itemWithoutLink = {
+        heading,
+        level,
+        parentId: level === 3 ? currentH2?.heading.id : undefined,
+      };
+      const item: TocItem = { ...itemWithoutLink, link: createLink(itemWithoutLink) };
+      const listItem = document.createElement("li");
+      listItem.append(item.link);
+
+      if (level === 2) {
+        list.append(listItem);
+        currentH2 = item;
+        currentH2List = undefined;
+      } else if (currentH2) {
+        if (!currentH2List) {
+          currentH2List = document.createElement("ol");
+          currentH2.link.parentElement?.append(currentH2List);
+        }
+        currentH2List.append(listItem);
+      } else {
+        // Malformed heading order still produces usable navigation.
+        list.append(listItem);
+      }
+
+      items.push(item);
+    }
+
+    for (const [index, item] of items.entries()) {
+      if (item.level === 3) {
+        item.nextBoundary = items[index + 1]?.heading;
+        continue;
+      }
+
+      item.nextBoundary = items.slice(index + 1).find((candidate) => candidate.level === 2)?.heading;
+    }
+
+    let appliedIds = new Set<string>();
+    let animationFrame: number | undefined;
+
+    function setActive(activeIds: Set<string>): void {
+      for (const item of items) {
+        const id = item.heading.id;
+        if (activeIds.has(id) === appliedIds.has(id)) continue;
+
+        const active = activeIds.has(id);
+        item.link.toggleAttribute("data-toc-active", active);
+        item.heading.toggleAttribute("data-toc-active", active);
+        item.link.toggleAttribute("aria-current", active);
+      }
+
+      appliedIds = activeIds;
+    }
+
+    function updateActiveHeadings(): void {
+      const activeIds = new Set<string>();
+      const viewportHeight = window.innerHeight;
+      const focusTop = FOCUS_OFFSET_TOP_PX;
+      const focusBottom = Math.max(focusTop, viewportHeight - FOCUS_OFFSET_BOTTOM_PX);
+      const headingTops = new Map(items.map((item) => [item.heading.id, item.heading.getBoundingClientRect().top]));
+      const contentBottom = contentBody.getBoundingClientRect().bottom;
+
+      for (const item of items) {
+        const sectionStart = headingTops.get(item.heading.id) ?? 0;
+        const sectionEnd = item.nextBoundary ? (headingTops.get(item.nextBoundary.id) ?? contentBottom) : contentBottom;
+
+        // H2 sections extend to the next H2; H3 sections extend to the next
+        // heading. This permits several visible sections to be active at once.
+        if (sectionStart < focusBottom && sectionEnd > focusTop) {
+          activeIds.add(item.heading.id);
+          if (item.parentId) activeIds.add(item.parentId);
+        }
+      }
+
+      setActive(activeIds);
+    }
+
+    function scheduleUpdate(): void {
+      if (animationFrame !== undefined) return;
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = undefined;
+        updateActiveHeadings();
+      });
+    }
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate, { passive: true });
+
+    const resizeObserver = new ResizeObserver(scheduleUpdate);
+    resizeObserver.observe(contentBody);
+    scheduleUpdate();
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-toc]").forEach(initialiseToc);
+</script>
+
+<style>
+  [data-toc-debug-line] {
+    position: fixed;
+    z-index: 200;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: hotpink;
+    color: hotpink;
+    font: 10px/1 monospace;
+    pointer-events: none;
+  }
+</style>
