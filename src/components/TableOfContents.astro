@@ -11,7 +11,7 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
   aria-label="On this page"
   data-toc
   data-toc-content-selector={contentSelector}
-  class="sticky top-12 self-start text-sm leading-tight text-muted [&_a]:block [&_a]:py-1 [&_a]:hover:text-foreground [&_a]:focus-visible:text-foreground">
+  class="sticky top-12 self-start text-sm leading-tight text-muted [&_a]:block [&_a]:border-l-2 [&_a]:border-transparent [&_a]:py-1 [&_a]:hover:text-foreground [&_a]:focus-visible:text-foreground">
   <ol data-toc-list class="[&_a]:pl-4 [&_ol]:pl-4"></ol>
 </nav>
 
@@ -39,7 +39,7 @@ const { contentSelector = "[data-toc-content]" } = Astro.props;
     const link = document.createElement("a");
     link.href = `#${item.heading.id}`;
     link.textContent = item.heading.textContent?.trim() || item.heading.id;
-    link.className = "data-[toc-active]:text-accent data-[toc-active]:border-l-2 data-[toc-active]:border-l-accent";
+    link.className = "data-[toc-active]:text-accent data-[toc-active]:border-l-accent";
     link.dataset.tocLink = item.heading.id;
     link.dataset.tocLevel = String(item.level);
     return link;
