@@ -379,11 +379,9 @@ import X from "phosphor-astro/X.astro";
 
       renderResults(loaded);
 
-      if (loaded.length === 0) {
-        setStatus(`No results for “${trimmed}”`);
-      } else {
-        setStatus(`${loaded.length} result${loaded.length === 1 ? "" : "s"}`);
-      }
+      // Only surface status text when there's nothing on screen to speak for
+      // itself — a visible result list doesn't need a redundant count.
+      setStatus(loaded.length === 0 ? `No results for "${trimmed}"` : "");
     } catch (error: unknown) {
       clearResults();
       setStatus(
