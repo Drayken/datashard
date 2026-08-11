@@ -17,6 +17,12 @@ export default {
         bracketSameLine: true,
       },
     },
+    {
+      files: ["*.md", "*.mdx"],
+      options: {
+        proseWrap: "preserve",
+      },
+    },
   ],
   tailwindStylesheet: "./src/css/global.css",
   tailwindFunctions: ["clsx", "cn", "cva", "tw"],

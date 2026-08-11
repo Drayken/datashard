@@ -13,5 +13,15 @@
   "eslint.validate": ["javascript", "typescript", "astro"],
   "files.associations": {
     "*.css": "tailwindcss"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "editor.rulers": [120]
+  },
+  "[mdx]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "editor.rulers": [120]
   }
 }
