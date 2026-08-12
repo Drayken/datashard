@@ -362,7 +362,7 @@ import X from "phosphor-astro/X.astro";
 
     try {
       const api = await ensurePagefind();
-      const response = await api.debouncedSearch(trimmed);
+      const response = await api.debouncedSearch(trimmed, {}, 50);
       if (response === null) return;
 
       const loaded = await Promise.all(
