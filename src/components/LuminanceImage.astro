@@ -6,11 +6,12 @@ interface Props {
   src: ImageMetadata;
   alt: string;
   class?: string;
+  width?: number;
 }
 
-const { src, alt, class: className } = Astro.props;
+const { src, alt, class: className, width = 1440 } = Astro.props;
 
-const mask = (await getImage({ src, width: 1440, format: "webp" })).src;
+const mask = (await getImage({ src, width, format: "webp" })).src;
 ---
 
 <figure class={className}>
@@ -18,7 +19,6 @@ const mask = (await getImage({ src, width: 1440, format: "webp" })).src;
     class="luminance-mask bg-foreground"
     style={`--mask: url(${mask}); --mask-size: 100% 100%; aspect-ratio: ${src.width} / ${src.height}`}
     role="img"
-    aria-label={alt}
-  >
+    aria-label={alt}>
   </div>
 </figure>

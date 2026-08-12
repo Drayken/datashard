@@ -4,22 +4,70 @@ description: "Personal notes on CRPGs I've played."
 pubDate: "Aug 9 2026"
 updatedDate: "Aug 11 2026"
 heroImage: "../../assets/placeholder.webp"
+# https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/{appId}/library_600x900.jpg
 ---
 
 import LuminanceImage from "@/components/LuminanceImage.astro";
+import CrpgTierList from "@/components/CrpgTierList.astro";
+import crpgBg3 from "../../assets/dump/crpg-bg3.webp";
+import crpgDe from "../../assets/dump/crpg-de.webp";
+import crpgDos2 from "../../assets/dump/crpg-dos2.webp";
+import crpgPt from "../../assets/dump/crpg-pt.webp";
+import crpgW40krt from "../../assets/dump/crpg-w40krt.webp";
 
-## Tracker
+## Tier List
 
-Lightweight notes on CRPGs I've played, proper format later.
-
-- 9 - Baldur's Gate 3
-- 7 - Divinity: Original Sin 2
-- 6 - Disco Elysium
-- 6 - Warhammer 40,000: Rogue Trader
-- 5 - Planescape: Torment: Enhanced Edition
-- ? - Baldur's Gate
-
-Potentially thinking about pros/cons styled component for each here? Tags?
+<CrpgTierList
+  games={[
+    {
+      title: "Baldur's Gate 3",
+      score: 9.0,
+      image: crpgBg3,
+      pros: [
+        "Story",
+        "Characters",
+        "Romance",
+        "Agency",
+        "Combat",
+        "Quests",
+        "Build Diversity",
+        "Exploration",
+        "Atmosphere",
+        "Presentation",
+        "Replayability",
+      ],
+      notes:
+        "Took a point off due to rushed & cut content in Act 3 leading to unresolved plot points. Also ran into a game breaking bug within that same Act which forced a 2 hour rollback.",
+    },
+    {
+      title: "Divinity: Original Sin 2",
+      score: 7.0,
+      image: crpgDos2,
+      pros: ["Combat", "Build Diversity"],
+      cons: ["Romance"],
+    },
+    {
+      title: "Disco Elysium",
+      score: 6.0,
+      image: crpgDe,
+      pros: ["Story", "Agency", "Atmosphere", "Presentation"],
+    },
+    {
+      title: "Warhammer 40,000: Rogue Trader",
+      score: 6.0,
+      image: crpgW40krt,
+      pros: ["Story", "Agency", "Atmosphere"],
+      cons: ["Quests", "Build Diversity"],
+    },
+    {
+      title: "Planescape: Torment: Enhanced Edition",
+      score: 5.0,
+      image: crpgPt,
+      pros: ["Story", "Atmosphere"],
+      cons: ["Romance", "Combat", "Quests", "Build Diversity", "Exploration"],
+    },
+  ]}
+/>
 
 ---
 
