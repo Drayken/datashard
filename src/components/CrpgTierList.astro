@@ -35,7 +35,7 @@ const { games } = Astro.props;
   {
     games.map((game) => (
       <li class="relative">
-        <span class="absolute top-0 left-0 z-1 inline-block border border-body bg-background px-1.5 font-heading text-lg font-bold text-body outline-4 outline-background">
+        <span class="absolute top-0 left-0 z-1 inline-block border border-foreground bg-background px-1.5 font-heading text-lg font-bold text-foreground outline-4 outline-background">
           {game.score.toFixed(1)}
         </span>
 
